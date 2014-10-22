@@ -1,0 +1,16 @@
+@-webkit-keyframes super-rainbow {
+    0% {background-color: purple}
+    20% {background-color: red}
+    40% {background-color: blue}
+    60% {background-color: orange}
+    80% {background-color: green}
+    100% {background-color: purple}
+}
+@-moz-keyframes super-rainbow {
+    0% {background-color: purple}
+    20% {background-color: red}
+    40% {background-color: blue}
+    60% {background-color: orange}
+    80% {background-color: green}
+    100% {background-color: purple}
+}
