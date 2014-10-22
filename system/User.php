@@ -5,6 +5,9 @@ class User {
 	/** The userId of this user */
 	private $userId;
 
+	/** The entityId linked to this user */
+	private $entityId;
+
 	/** The entity for this user */
 	private $entity;
 
@@ -19,6 +22,9 @@ class User {
 
 	/** The lastname of the user */
 	private $lastName;
+
+	/** The email of the user */
+	private $mail;
 
 	/** Is the user loaded */
 	private $loaded = false;
@@ -135,15 +141,13 @@ class User {
 		}
 		$res = $res[0];
 
-		$salt = $res[5];
-		$hash = $res[6];
-		if(!password_verify($oldPassword.$salt, $hash)){
+		$hash = $res[5];
+		if(!password_verify($oldPassword, $hash)){
 			return false;
 		}
-		$salt = password_hash(mt_rand(0,1000), PASSWORD_BCRYPT);
-		$hash = password_hash($password . $salt, PASSWORD_BCRYPT);
+		$hash = password_hash($password, PASSWORD_BCRYPT);
 
-		return $db->nquery("update user set salt=?, hash=? where id=?", array($salt, $hash, $this->userId));
+		return $db->nquery("update user set hash=? where id=?", array($hash, $this->userId));
 	}
 
 	/**
@@ -184,14 +188,82 @@ class User {
 			// Check password
 			$r = $res[0];
 
-			$salt = $r[5];
-    		$hash = $r[6];
-    		if(!password_verify($password.$salt, $hash)){
+    		$hash = $r[5];
+    		if(!password_verify($password, $hash)){
     			return null;
     		}
 			return new User($r[0]);
 		}
 		return null;
+	}
+
+	/**
+	 * 
+	 * 
+	 * 
+	 */
+	public function createUser($userInfo){
+		global $db;
+		$return = array("success"=>false);
+		$r = $db->query("select * from User where username=?",array($userInfo['username']));
+		if(count($r)==0){ // Success
+			$doIt = true;
+			// Check parameters
+			if(strlen($userInfo['username'])>56){
+				$return['username'] = "Username too long.";
+				$doIt = false;
+			}
+
+			if(strlen($userInfo['firstName'])>56){
+				$doIt = false;
+				$return['firstName'] = "First name too long.";
+			}
+
+			if(strlen($userInfo['middleName'])>56){
+				$doIt = false;
+				$return['middleName'] = "Middle name too long.";
+			}
+
+			if(strlen($userInfo['lastName'])>56){
+				$doIt = false;
+				$return['lastName'] = "Last name is too long.";
+			}
+
+			if(strlen($userInfo['email'])>128){
+				$doIt = false;
+				$return['email'] = "Email too long.";
+			}
+
+			if(!filter_var($userInfo['email'], FILTER_VALIDATE_EMAIL)){
+				$doIt = false;
+				$return['email'] = "Email is not of correct format";
+			}
+
+			if($userInfo['password']!=$userInfo['confirm']){
+				$doIt = false;
+				$return['confirm'] = "Passwords do not match";
+			}
+
+			$options = [
+			    'cost' => 11,
+			    'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+			];
+			$hash = password_hash($userInfo['password'], PASSWORD_BCRYPT, $options);
+
+			if($doIt){
+				$fullName = $userInfo['firstName'].(!empty($userInfo['middleName'])?" ".$userInfo['middleName']:"")." ".$userInfo['lastName'];
+
+				$db->nquery("insert into entity (name,visible) values (?,?)",array($fullName, 1));
+				$entityId = $db->getDBN()->lastInsertId();
+
+				$db->nquery("insert into user (firstName, middleName,lastName,username,hash,mail,entityId) values (?,?,?,?,?,?,?)",
+					array($userInfo['firstName'], $userInfo['middleName'], $userInfo['lastName'], $userInfo['username'], $hash, $userInfo['email'],$entityId));
+
+
+				$return['success']=true;
+			}
+		} 
+		return $return;
 	}
 
 	// --------------------------- Internals --------------------------
@@ -205,7 +277,6 @@ class User {
 	private function load(){
 		global $db;
 
-		$this->entity = new Entity($this->userId);
 		$res = $db->query("select * from user where id=?", array($this->userId));
 		if(count($res)!=1){
 			return false;
@@ -216,6 +287,10 @@ class User {
 		$this->firstName = $res[1];
 		$this->middleName = $res[2];
 		$this->lastName = $res[3];
+		$this->mail = $res[6];
+		$this->entityId = $res[7];
+
+		$this->entity = new Entity($this->entityId);
 
 		return true;
 	}

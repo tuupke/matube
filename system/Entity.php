@@ -349,6 +349,9 @@ class Entity {
 			return self::NOPERMISSION;
 		}
 		$db->nquery("delete from group where parentId=?", array($entityId));
+		if(!count($children)){
+			return;
+		}
 		$fff = array_fill(0, count($children), $entityId);
 		$vals = array(":eId" => $entityId);
 		$placeholders = "";
@@ -371,7 +374,8 @@ class Entity {
 		global $db;
 		$db->nquery("insert into entity (name, visible) values (?, ?)", array($name, $visible?1:0));
 		$id = $db->getDBN()->lastInsertId();
-		Entity::setChildren($id, $children);
+		//if(count($children))
+			//Entity::setChildren($id, $children);
 		return new Entity($id);
 	}
 

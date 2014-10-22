@@ -1,6 +1,6 @@
 <?php
 
-$base = "2in28";
+$base = "matube/";
 
 function __autoload($cn) {
     include "system/$cn.php";
@@ -9,6 +9,7 @@ function __autoload($cn) {
 $db = new Database();
 
 $user = new User();
+$entity = $user->getEntity();
 
 
 $page = isset($_GET['page'])?$_GET['page']:"home";
@@ -19,7 +20,6 @@ include("pages/$page.php");
 
 
 $loggedIn = $user->isLoggedIn();
-
 
 $un = $wm = $login = $menu = "";
 if($loggedIn){
@@ -35,19 +35,19 @@ if($loggedIn){
 <html>
 <head>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="/<?php echo $base;?>css/bootstrap.min.css">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/<?php echo $base;?>css/bootstrap-theme.min.css">
 
 <!-- matube css -->
-<link rel="stylesheet" href="css/matube.css">
+<link rel="stylesheet" href="/<?php echo $base;?>css/matube.css">
 
 <!-- Production jquery -->
-<script src="js/jquery-2.1.1.min.js"></script>
+<script src="/<?php echo $base;?>js/jquery-2.1.1.min.js"></script>
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+<script src="/<?php echo $base;?>js/bootstrap.min.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-default" role="navigation">

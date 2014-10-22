@@ -2,8 +2,10 @@
 
 
 function body(){
-
+global $base;
 ?>
+
+            <script src="/<?php echo $base; ?>js/uploader.js"></script>
             <div id="fileGroup"class="form-group"> 
               <label for="file">Video</label> 
               <div class="form-control" style='min-height:120px;'>
