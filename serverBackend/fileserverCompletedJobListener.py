@@ -13,7 +13,7 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
 channel = connection.channel()
 
-channel.queue_declare(queue='completedJobs', durable=True)
+channel.queue_declare(queue='completedJobs'+getLocalIP(), durable=True)
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
 def callback(ch, method, properties, body):
