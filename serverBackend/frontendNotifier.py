@@ -7,9 +7,10 @@ import pika
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='10.133.235.35'))
+
 channel = connection.channel()
 
-channel.queue_declare(queue='newJobs')
+#channel.queue_declare(queue='newJobs')
 
 channel.basic_publish(exchange='',
                       routing_key='newJobs',
