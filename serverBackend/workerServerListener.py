@@ -23,10 +23,13 @@ def retrieve_file(remoteserver, filename):
     subprocess.check_output("rsync root@" + remoteserver + ":"+ filespath + filename + " " + filespath ,shell=True)
 
 def push_file(remoteserver, filename):
-    subprocess.check_output("rsync " + filespath + filename + " root@" + remoteserver + ":" + filespath,shell=True)
+    subprocess.check_output("rsync " + filespath + filename + " root@" + remoteserver + ":" + "/usr/share/nginx/html/videos/",shell=True)
+
+def deleteProcessedVideos(file1, file2):
+    subprocess.check_output("rm " + filespath + file1 + " " + filespath + file2, shell=True)
 
 def encodeFile(filename):
-    encodedfilename = filename.replace(".mp4", ".ogg")
+    encodedfilename = filename.split(".")[0] + ".ogg"
 
     c = Converter()
     options = {
@@ -71,15 +74,19 @@ def callback(ch, method, properties, body):
 
     retrieve_file(job['fileserver'], job['filename'])
 
-    job['filename'] = encodeFile(job['filename'])
+    encodedfile = encodeFile(job['filename'])
+
+    deleteProcessedVideos(job['filename'], encodedfile)
+
+    job['filename'] = encodedfile
 
     push_file(job['fileserver'], job['filename'])
 
     # remove old files
 
     channel.basic_publish(exchange='',
-                          routing_key='completedJobs',
-                          body= json.dumps(job))
+                          routing_key='completedJobs'+job['fileserver'],
+                          body=json.dumps(job))
 
 
 
