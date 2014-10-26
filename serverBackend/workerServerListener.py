@@ -48,7 +48,7 @@ def encodeFile(filename):
         'map': 0
     }
 
-    conv = c.convert(filespath + filename, encodedfilename, options)
+    conv = c.convert(filespath + filename, filespath + encodedfilename, options)
 
     for timecode in conv:
 	    sys.stdout.write("\r%d%%" % timecode)
