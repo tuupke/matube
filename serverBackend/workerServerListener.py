@@ -76,7 +76,7 @@ def callback(ch, method, properties, body):
 
     encodedfile = encodeFile(job['filename'])
 
-    deleteProcessedVideos(job['filename'], encodedfile)
+    #deleteProcessedVideos(job['filename'], encodedfile)
 
     job['filename'] = encodedfile
 
