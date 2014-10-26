@@ -13,11 +13,11 @@ class MatubeEmail:
         #Next, log in to the server
         server.login("server@sumrall.nl", "gewiseeeeeeeeeeeeeeeeeeee")
         header  = 'From: %s\n' % "server@sumrall.nl"
-        header += 'To: ' + self.email
+        header += 'To: ' + email
         header += 'Subject: %s\n\n' % "Video file ready to download"
-        message = header + "\nHello! Your video has been processed and is ready to download at the link below. Thanks " + self.email + "\n " + url
+        message = header + "\nHello! Your video has been processed and is ready to download at the link below. Thanks " + email + "\n " + url
 
         #Send the mail
-        server.sendmail("server@sumrall.nl", self.email, message)
+        server.sendmail("server@sumrall.nl", email, message)
 
 
