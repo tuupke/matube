@@ -1,18 +1,17 @@
 __author__ = 'max'
 """
-Listens for communication from the website/frontend for notification about a new job.
-Adds the job to the Database in the PendingJob table, then sends the job data off to the worker.
+This resides on the worker servers.
+ It is the responsibility of this process to listen for new jobs, process the video,
+ send the video back, and send a message back.
 """
 
-import pika
-import FileServer
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost'))
+        host='10.133.235.35'))
 channel = connection.channel()
 
-channel.queue_declare(queue='newJobs', durable=True)
+channel.queue_declare(queue='processJobs', durable=True)
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
 def callback(ch, method, properties, body):
@@ -24,8 +23,8 @@ def callback(ch, method, properties, body):
 
     # send job off to queue to be consumed by worker server.
     channel.basic_publish(exchange='',
-                          routing_key='processJob',
-                          body=body)
+                          routing_key='completedJobs',
+                          body=body.append('--encoded'))
 
 
 
@@ -35,6 +34,6 @@ def callback(ch, method, properties, body):
 
 channel.basic_qos(prefetch_count=1)
 channel.basic_consume(callback,
-                      queue='newJobs')
+                      queue='processJobs')
 
 channel.start_consuming()

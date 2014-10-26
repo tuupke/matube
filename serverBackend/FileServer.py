@@ -1,7 +1,6 @@
 __author__ = 'max'
 import peewee
 from peewee import *  #MySQL ORM
-import pika  # RabbitMQ wrapper
 from MatubeEmail import *
 import subprocess
 
@@ -11,12 +10,6 @@ db = MySQLDatabase("videos",
                   passwd="fileserver")
 IP = subprocess.check_output("curl ifconfig.me/ip", shell=True)
 PATH_TO_FILES = "/videos/"
-
-#Connect to RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters(
-               'localhost'))
-channel = connection.channel()
-
 
 
 class FileServer:
