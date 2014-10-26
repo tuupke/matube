@@ -13,6 +13,7 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
 channel = connection.channel()
 
 channel.queue_declare(queue='newJobs', durable=True)
+
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
 def callback(ch, method, properties, body):
@@ -24,7 +25,7 @@ def callback(ch, method, properties, body):
 
     # send job off to queue to be consumed by worker server.
     channel.basic_publish(exchange='',
-                          routing_key='processJob',
+                          routing_key='processJobs',
                           body=body)
 
 
