@@ -26,7 +26,7 @@ def push_file(remoteserver, filename):
     subprocess.check_output("rsync " + filespath + filename + " root@" + remoteserver + ":" + filespath,shell=True)
 
 def encodeFile(filename):
-    encodedfilename = filename.replace(".mp4")+".ogg"
+    encodedfilename = filename.replace(".mp4", ".ogg")
 
     c = Converter()
     options = {
