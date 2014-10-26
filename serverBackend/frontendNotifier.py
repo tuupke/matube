@@ -15,7 +15,7 @@ channel = connection.channel()
 #channel.queue_declare(queue='newJobs')
 
 task = {
-    'filename' : 'example1.mp4',
+    'filename' : 'cat.flv',
     'email' : 'jmsumrall@gmail.com'
 }
 

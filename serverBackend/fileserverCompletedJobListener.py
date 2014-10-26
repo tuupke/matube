@@ -7,6 +7,7 @@ add it to the Completed job table, and notify the user to download the file.
 import pika
 import json
 from MatubeEmail import *
+from utilsForStats import *
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
@@ -34,6 +35,6 @@ def callback(ch, method, properties, body):
 
 channel.basic_qos(prefetch_count=1)
 channel.basic_consume(callback,
-                      queue='completedJobs')
+                      queue='completedJobs'+getLocalIP())
 
 channel.start_consuming()
