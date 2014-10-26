@@ -2,23 +2,26 @@
 import web
 import subprocess
 import json
+from utilsForStats import *
 
 urls = (
-    '/', 'index'
+    ('/', 'index'),
+    ('/syncPK', 'syncPK')
 )
 
 class index:
 
     def getHealth(self):
 	data = {}
-	data["freeMemory"] = subprocess.check_output("free -m | grep -n 1 | awk {print $4}'", shell=True).strip()
-	data["oneMinLoad"] = subprocess.check_output("uptime | awk '{print $8}'", shell=True).replace(",","").strip()
-	data["fiveMinLoad"] = subprocess.check_output("uptime | awk '{print $9}'", shell=True).replace(",","").strip()
-	data["tenMinLoad"] = subprocess.check_output("uptime | awk '{print $10}'", shell=True).replace(",","").strip()
+	data["freeMemory"] = getFreeMemory()
+	data["oneMinLoad"] = getOneMinLoad()
+	data["fiveMinLoad"] = getFiveMinLoad()
+	data["tenMinLoad"] = getTenMinLoad()
 	return json.dumps(data, indent=4, separators=(',', ': '))
 
     def GET(self):
         return self.getHealth()
+
 
 
 if __name__ == "__main__":

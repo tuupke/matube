@@ -6,7 +6,8 @@ Adds the job to the Database in the PendingJob table, then sends the job data of
 
 import pika
 import FileServer
-
+from utilsForStats import *
+import json
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
@@ -24,9 +25,18 @@ def callback(ch, method, properties, body):
     # add filename,email to DB
 
     # send job off to queue to be consumed by worker server.
+    incomingJob = json.loads(body)
+
+
+    task = {
+        'fileserver' : getLocalIP(),
+        'filename' : incomingJob['filename']
+    }
+
+
     channel.basic_publish(exchange='',
                           routing_key='processJobs',
-                          body=body)
+                          body=json.dumps(task))
 
 
 

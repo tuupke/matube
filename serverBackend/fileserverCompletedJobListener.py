@@ -5,6 +5,8 @@ this servers file directory. It is this processes responsibility to remove this 
 add it to the Completed job table, and notify the user to download the file.
 """
 import pika
+import json
+from MatubeEmail import *
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
@@ -22,7 +24,9 @@ def callback(ch, method, properties, body):
 
     # Notify user via email to download their file
 
+    job = json.loads(body)
 
+    MatubeEmail('jmsumrall@gmail.com', job['filename'])
 
 
 
