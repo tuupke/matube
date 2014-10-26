@@ -20,7 +20,7 @@ channel.queue_declare(queue='processJobs', durable=True)
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
 def retrieve_file(remoteserver, filename):
-    subprocess.check_output("rsync root@" + remoteserver + ":"+ filespath + filename + " /root/" ,shell=True)
+    subprocess.check_output("rsync root@" + remoteserver + ":"+ filespath + filename + " " + filespath ,shell=True)
 
 def push_file(remoteserver, filename):
     subprocess.check_output("rsync " + filespath + filename + " root@" + remoteserver + ":" + filespath,shell=True)
