@@ -10,7 +10,7 @@ import json
 import sys
 from converter import Converter
 
-filespath = "/root/files"
+filespath = "/root/files/"
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='10.133.235.35'))
