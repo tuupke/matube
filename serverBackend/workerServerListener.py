@@ -4,7 +4,7 @@ This resides on the worker servers.
  It is the responsibility of this process to listen for new jobs, process the video,
  send the video back, and send a message back.
 """
-
+import pika
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
