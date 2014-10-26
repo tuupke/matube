@@ -24,7 +24,7 @@ def callback(ch, method, properties, body):
     # send job off to queue to be consumed by worker server.
     channel.basic_publish(exchange='',
                           routing_key='completedJobs',
-                          body=body.append('--encoded'))
+                          body=body + '--encoded')
 
 
 
