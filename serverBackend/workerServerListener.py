@@ -7,7 +7,10 @@ This resides on the worker servers.
 import pika
 from utilsForStats import *
 import json
+import sys
 from converter import Converter
+
+filespath = "/root/files"
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='10.133.235.35'))
@@ -17,10 +20,10 @@ channel.queue_declare(queue='processJobs', durable=True)
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
 def retrieve_file(remoteserver, filename):
-    subprocess.check_output("rsync root@" + remoteserver + ":/root/files/" + filename + " /root/" ,shell=True)
+    subprocess.check_output("rsync root@" + remoteserver + ":"+ filespath + filename + " /root/" ,shell=True)
 
 def push_file(remoteserver, filename):
-    subprocess.check_output("rsync /root/files/" + filename + " root@" + remoteserver + ":/root/files/",shell=True)
+    subprocess.check_output("rsync " + filespath + filename + " root@" + remoteserver + ":" + filespath,shell=True)
 
 def encodeFile(filename):
     encodedfilename = filename.replace(".mp4")+".ogg"
@@ -45,7 +48,7 @@ def encodeFile(filename):
         'map': 0
     }
 
-    conv = c.convert(filename, encodedfilename, options)
+    conv = c.convert(filespath + filename, encodedfilename, options)
 
     for timecode in conv:
 	    sys.stdout.write("\r%d%%" % timecode)
@@ -68,7 +71,7 @@ def callback(ch, method, properties, body):
 
     retrieve_file(job['fileserver'], job['filename'])
 
-    job['filename'] = encodeFile(job['/files/filename'])
+    job['filename'] = encodeFile(job['filename'])
 
     push_file(job['fileserver'], job['filename'])
 
