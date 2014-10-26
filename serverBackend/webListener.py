@@ -1,4 +1,9 @@
 __author__ = 'max'
+"""
+Listens for communication from the website/frontend for notification about a new job.
+Adds the job to the Database in the PendingJob table, then sends the job data off to the worker.
+"""
+
 import pika
 import FileServer
 
