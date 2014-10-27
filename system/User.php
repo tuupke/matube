@@ -244,11 +244,7 @@ class User {
 				$return['confirm'] = "Passwords do not match";
 			}
 
-			$options = [
-			    'cost' => 11,
-			    'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-			];
-			$hash = password_hash($userInfo['password'], PASSWORD_BCRYPT, $options);
+			$hash = password_hash($userInfo['password'], PASSWORD_BCRYPT);
 
 			if($doIt){
 				$fullName = $userInfo['firstName'].(!empty($userInfo['middleName'])?" ".$userInfo['middleName']:"")." ".$userInfo['lastName'];
