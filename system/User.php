@@ -30,7 +30,7 @@ class User {
 	private $loaded = false;
 
 	/** The values which should be stored in session */
-	private $values = array('username', 'firstName', 'middleName', 'lastName', 'entity');
+	private $values = array('username', 'firstName', 'middleName', 'lastName', 'entity', 'mail');
 
 	/** Value which shows whether a user is logged in */
 	public $isLoggedIn;
