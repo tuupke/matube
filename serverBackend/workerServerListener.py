@@ -7,16 +7,19 @@ This resides on the worker servers.
 import pika
 from utilsForStats import *
 import json
+import subprocess
 import sys
 from converter import Converter
-
-filespath = "/root/files/"
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='10.133.234.184'))
 channel = connection.channel()
 
 channel.queue_declare(queue='processJobs', durable=True)
+
+remotepath = "/videos/"
+filespath = "/usr/share/nginx/html/videos"
+
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
 """ def sendStatusMessage(status,progress):
@@ -33,10 +36,7 @@ def sendStatusMessage(status, progress):
     f.close()
 
 def retrieve_file(remoteserver, filename):
-    subprocess.check_output("rsync root@" + remoteserver + ":"+ filespath + filename + " " + filespath ,shell=True)
-
-def push_file(remoteserver, filename):
-    subprocess.check_output("rsync " + filespath + filename + " root@" + remoteserver + ":" + "/usr/share/nginx/html/videos/",shell=True)
+    subprocess.check_output("wget -P " + filespath + " " + remoteserver + remotepath + filename,shell=True)
 
 def deleteProcessedVideos(file1, file2):
     subprocess.check_output("rm " + filespath + file1 + " " + filespath + file2, shell=True)
@@ -92,9 +92,9 @@ def callback(ch, method, properties, body):
 
     #deleteProcessedVideos(job['filename'], encodedfile)
 
+    job['workerserver'] = getLocalIP()
     job['filename'] = encodedfile
 
-    push_file(job['fileserver'], job['filename'])
 
     # remove old files
 

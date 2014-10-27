@@ -8,10 +8,20 @@ import pika
 import json
 from MatubeEmail import *
 from utilsForStats import *
+import subprocess
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='10.133.234.184'))
 channel = connection.channel()
+
+remotepath = "/videos/"
+filespath = "/usr/share/nginx/html/videos"
+
+
+def retrieve_file(remoteserver, filename):
+    subprocess.check_output("wget -P " + filespath + " " + remoteserver + remotepath + filename,shell=True)
+
+
 
 channel.queue_declare(queue='completedJobs'+getLocalIP(), durable=True)
 print ' [*] Waiting for messages. To exit press CTRL+C'
@@ -26,6 +36,8 @@ def callback(ch, method, properties, body):
     # Notify user via email to download their file
 
     job = json.loads(body)
+
+    retrieve_file(job['workerserver'], job['filename'])
 
     MatubeEmail('jmsumrall@gmail.com', getPublicIP() + "/videos/" + job['filename'])
 

@@ -7,6 +7,7 @@ Adds the job to the Database in the PendingJob table, then sends the job data of
 import pika
 from utilsForStats import *
 import json
+import subprocess
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='10.133.234.184'))
@@ -15,10 +16,11 @@ channel = connection.channel()
 channel.queue_declare(queue='newJobs', durable=True)
 
 frontend = "10.133.234.184"
-filespath = "/root/files/"
+remotepath = "/videos/"
+filespath = "/usr/share/nginx/html/videos"
 
 def retrieve_file(filename):
-    subprocess.check_output("rsync root@" + frontend + ":"+ filespath + filename + " " + filespath ,shell=True)
+    subprocess.check_output("wget -P " + filespath + " " + frontend + remotepath + filename,shell=True)
 
 
 
