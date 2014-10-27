@@ -29,7 +29,7 @@ print ' [*] Waiting for messages. To exit press CTRL+C'
 """
 def sendStatusMessage(status, progress):
     f = file('/root/status.txt','w')
-    f.write(status + " " + progress)
+    f.write(status + " " + str(progress))
     f.close()
 
 def retrieve_file(remoteserver, filename):
