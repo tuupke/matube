@@ -5,7 +5,6 @@ Adds the job to the Database in the PendingJob table, then sends the job data of
 """
 
 import pika
-import FileServer
 from utilsForStats import *
 import json
 
