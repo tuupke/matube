@@ -48,7 +48,6 @@ class User {
 		} else if(session_start()){
 			if($this->sessionLoaded()){
 				$this->loaded = $this->sessionLoad();
-
 			}
 		}
 	}
