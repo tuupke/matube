@@ -12,12 +12,12 @@ urls = (
 class index:
 
     def getHealth(self):
-	data = {}
-	data["freeMemory"] = getFreeMemory()
-	data["oneMinLoad"] = getOneMinLoad()
-	data["fiveMinLoad"] = getFiveMinLoad()
-	data["tenMinLoad"] = getTenMinLoad()
-	return json.dumps(data, indent=4, separators=(',', ': '))
+        data = {}
+        data["freeMemory"] = getFreeMemory()
+        data["oneMinLoad"] = getOneMinLoad()
+        data["fiveMinLoad"] = getFiveMinLoad()
+        data["tenMinLoad"] = getTenMinLoad()
+        return json.dumps(data, indent=4, separators=(',', ': '))
 
     def GET(self):
         return self.getHealth()
