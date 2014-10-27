@@ -19,6 +19,19 @@ channel = connection.channel()
 channel.queue_declare(queue='processJobs', durable=True)
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
+""" def sendStatusMessage(status,progress):
+    channel.basic_publish(exchange='',
+                      routing_key='status',
+                      body=json.dumps({'type' : 'worker',
+                           'local ip' : getLocalIP(),
+                           'status' : status,
+                           'progress' : progress}))
+"""
+def sendStatusMessage(status, progress):
+    f = file('/root/status.txt','w')
+    f.write(status + " " + progress)
+    f.close()
+
 def retrieve_file(remoteserver, filename):
     subprocess.check_output("rsync root@" + remoteserver + ":"+ filespath + filename + " " + filespath ,shell=True)
 
@@ -54,8 +67,9 @@ def encodeFile(filename):
     conv = c.convert(filespath + filename, filespath + encodedfilename, options)
 
     for timecode in conv:
-	    sys.stdout.write("\r%d%%" % timecode)
-	    sys.stdout.flush()
+        sys.stdout.write("\r%d%%" % timecode)
+        sys.stdout.flush()
+        sendStatusMessage('encoding', timecode)
     print "\n Complete"
     return encodedfilename
 
@@ -84,9 +98,13 @@ def callback(ch, method, properties, body):
 
     # remove old files
 
+    #send a message back
     channel.basic_publish(exchange='',
                           routing_key='completedJobs'+job['fileserver'],
                           body=json.dumps(job))
+
+    #publish work status
+    sendStatusMessage('idle', '')
 
 
 

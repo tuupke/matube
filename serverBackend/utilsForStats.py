@@ -16,5 +16,8 @@ def getFiveMinLoad():
 def getTenMinLoad():
     return subprocess.check_output("uptime | awk '{print $10}'", shell=True).replace(",","").strip()
 
+def getStatus():
+    return subprocess.check_output("more /root/status.txt", shell=True)
+
 def getRSAPubKey():
     return subprocess.check_output("more /root/.ssh/.id_rsa.pub", shell=True)
