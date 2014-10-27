@@ -8,6 +8,7 @@ import pika
 from utilsForStats import *
 import json
 import subprocess
+import time
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='10.133.234.184'))
@@ -22,7 +23,11 @@ filespath = "/usr/share/nginx/html/videos"
 def retrieve_file(filename):
     subprocess.check_output("wget -P " + filespath + " " + frontend + remotepath + filename,shell=True)
 
-
+def give_file_unique_name(filename):
+    splitname = filename.split(".")
+    newFilename = splitname[0] + time.time() + "." + splitname[1]
+    subprocess.check_output("mv " + filespath + filename + " " + filespath + newFilename ,shell=True)
+    return newFilename
 
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
@@ -39,10 +44,10 @@ def callback(ch, method, properties, body):
 
     task = {
         'fileserver' : getLocalIP(),
-        'filename' : incomingJob['filename']
+        'filename' : give_file_unique_name(incomingJob['filename'])
     }
 
-    retrieve_file(task['filename'])
+    retrieve_file(incomingJob['filename'])
 
 
     channel.basic_publish(exchange='',
