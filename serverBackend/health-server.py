@@ -5,8 +5,8 @@ import json
 from utilsForStats import *
 
 urls = (
-    ('/', 'index'),
-    ('/syncPK', 'syncPK')
+    '/', 'index',
+    '/syncPK', 'syncPK'
 )
 
 class index:
