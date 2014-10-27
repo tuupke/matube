@@ -18,7 +18,7 @@ channel.queue_declare(queue='newJobs', durable=True)
 
 frontend = "10.133.234.184"
 remotepath = "/videos/"
-filespath = "/usr/share/nginx/html/videos"
+filespath = "/usr/share/nginx/html/videos/"
 
 def retrieve_file(filename):
     subprocess.check_output("wget -P " + filespath + " " + frontend + remotepath + filename,shell=True)
