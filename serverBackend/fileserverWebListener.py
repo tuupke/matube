@@ -44,7 +44,7 @@ def callback(ch, method, properties, body):
 
     task = {
         'fileserver' : getLocalIP(),
-        'filename' : give_file_unique_name(incomingJob['filename'])
+        'filename' : incomingJob['filename']
     }
 
     retrieve_file(incomingJob['filename'])
