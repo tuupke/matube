@@ -65,6 +65,7 @@ class User {
 		$_SESSION['middleName'] = $this->middleName;
 		$_SESSION['lastName'] = $this->lastName;
 		$_SESSION['entity'] = $this->entity;
+		$_SESSION['mail'] = $this->mail;
 		session_encode();
 	}
 
@@ -118,7 +119,7 @@ class User {
 	/**
 	 * Get the email adress of this user
 	 * 
-	 * @return String Returns the email of the user
+	 * @return String Returns the email of the
 	 */
 	public function getMail(){
 		return $this->mail;
@@ -313,6 +314,7 @@ class User {
 		$this->lastName = $_SESSION['lastName'];
 		$this->entity = $_SESSION['entity'];
 		$this->userId = $this->entity->getId();
+		$this->mail = $_SESSION['mail'];
 		return true;
 	}
 
