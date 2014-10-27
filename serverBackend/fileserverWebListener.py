@@ -9,10 +9,18 @@ from utilsForStats import *
 import json
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost'))
+        host='10.133.234.184'))
 channel = connection.channel()
 
 channel.queue_declare(queue='newJobs', durable=True)
+
+frontend = "10.133.234.184"
+filespath = "/root/files/"
+
+def retrieve_file(filename):
+    subprocess.check_output("rsync root@" + frontend + ":"+ filespath + filename + " " + filespath ,shell=True)
+
+
 
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
@@ -31,6 +39,8 @@ def callback(ch, method, properties, body):
         'fileserver' : getLocalIP(),
         'filename' : incomingJob['filename']
     }
+
+    retrieve_file(task['filename'])
 
 
     channel.basic_publish(exchange='',

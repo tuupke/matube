@@ -10,7 +10,7 @@ from MatubeEmail import *
 from utilsForStats import *
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost'))
+        host='10.133.234.184'))
 channel = connection.channel()
 
 channel.queue_declare(queue='completedJobs'+getLocalIP(), durable=True)
@@ -27,7 +27,7 @@ def callback(ch, method, properties, body):
 
     job = json.loads(body)
 
-    MatubeEmail('jmsumrall@gmail.com', job['filename'])
+    MatubeEmail('jmsumrall@gmail.com', getPublicIP() + "/videos/" + job['filename'])
 
 
 

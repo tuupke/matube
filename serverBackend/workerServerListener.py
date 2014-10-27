@@ -13,7 +13,7 @@ from converter import Converter
 filespath = "/root/files/"
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='10.133.235.35'))
+        host='10.133.234.184'))
 channel = connection.channel()
 
 channel.queue_declare(queue='processJobs', durable=True)
