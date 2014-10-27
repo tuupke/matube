@@ -17,6 +17,7 @@ class index:
         data["oneMinLoad"] = getOneMinLoad()
         data["fiveMinLoad"] = getFiveMinLoad()
         data["tenMinLoad"] = getTenMinLoad()
+        data["localIP"] = getLocalIP()
         return json.dumps(data, indent=4, separators=(',', ': '))
 
     def GET(self):
