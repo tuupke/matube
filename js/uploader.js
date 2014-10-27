@@ -1,5 +1,5 @@
 function uploader(toUploadFile){
-    var BYTES_PER_CHUNK = 1024 * 1024; // 1MB chunk size
+    var BYTES_PER_CHUNK = 1024*1024; // 1MB chunk size
     var chunk_size = BYTES_PER_CHUNK;
     var slices = 0;
     var slice_method;
@@ -7,13 +7,15 @@ function uploader(toUploadFile){
     var range_start = 0;
     var range_end = BYTES_PER_CHUNK;
     var url = "http://localhost/matube/upl.php";
+    var doneF = "http://localhost/matube/upl_done.php";
     var xmlhttp = new XMLHttpRequest();
     var name = false;
 
-    var fileName = toUploadFile.name;
-    var extension = fileName.split(".");
-    extension = extension[extension.length -1 ];
+    var fileName = toUploadFile.name.split(".");
+    var extension = fileName.pop();
+    fileName = fileName.join(".");
     var file_size = toUploadFile.size;
+    var done = false;
     var totalSlices = Math.ceil(file_size / BYTES_PER_CHUNK);
 
     if ('mozSlice' in file) {
@@ -28,10 +30,9 @@ function uploader(toUploadFile){
 
     function uploadFile(){
         var chunk;
-        setTimeout(function(){
             var add = "?ext="+extension;
             if(name){
-                add = "&file="+name;
+                add += "&file="+name;
             }
             // Setup AJAX request
             xmlhttp.open('PUT', url+add, false);
@@ -47,7 +48,6 @@ function uploader(toUploadFile){
             chunk = file[slice_method](range_start, range_end);
             xmlhttp.onload = chunkUploaded;
             xmlhttp.send(chunk);
-        }, 1);
     }
 
     function chunkUploaded(e){
@@ -67,16 +67,23 @@ function uploader(toUploadFile){
         range_end = range_start + chunk_size;
          
         // Next chunk
-        uploadFile();
+        
+        setTimeout(function(){uploadFile()},1);
 
     }
 
     function fileUploaded(){
+        if (done){
+            return;
+        }
+        done = true;
+        xmlhttp.open('GET', doneF+"?video="+name+"&ext="+extension+"&name="+encodeURIComponent(fileName), true);
+        xmlhttp.send("");
+        // xmlhttp.setRequestHeader('Content-Range', 'bytes ' + range_start + '-' + range_end + '/' + file_size);
+
         document.getElementById('uploadProgress').innerHTML = '100%';
         document.getElementById('uploadBar').style.width = '0%';
-          document.getElementById('uploadProgress').innerHTML = "Upload completed";
-
-        document.getElementById('content').value = name;
+        document.getElementById('uploadProgress').innerHTML = "Upload completed";
     }
 
     uploadFile();
