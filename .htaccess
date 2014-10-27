@@ -4,3 +4,5 @@ RewriteRule ^css.*				-		[L]
 RewriteRule ^fonts.*				-		[L]
 RewriteRule ^([^/\.]+)/*$			?page=$1	[L]
 RewriteRule ^([^/\.]+)/(.*)/*$          ?page=$1&options=$2       [L]
+RewriteCond %{REQUEST_METHOD} (PUT|DELETE)
+RewriteRule .* upl.php
