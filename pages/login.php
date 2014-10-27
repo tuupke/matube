@@ -21,7 +21,7 @@ function body(){
   global $loggingIn;
 ?>
 
-<form class="form-horizontal" action="login" method="post">
+<form class="form-horizontal" action="?page=login" method="post">
 <fieldset>
 <?php global $result; if(isset($result['message'])){echo $result['message'];} ?>
 <!-- Form Name -->
@@ -50,7 +50,7 @@ function body(){
   <label class="col-md-4 control-label" for="login"></label>
   <div class="col-md-8">
     <button id="login" name="login" class="btn btn-success">Login</button>
-    <button id="register" name="register" class="btn btn-primary" onclick='window.location="register";return false;'>Register</button>
+    <button id="register" name="register" class="btn btn-primary" onclick='window.location="?page=register";return false;'>Register</button>
   </div>
 </div>
 

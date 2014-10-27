@@ -4,7 +4,7 @@ $result;
 if(isset($_POST['username'])){ // Register account
   $result = User::createUser($_POST);
   if($result['success']){
-    header("location: /$base/login");
+    header("location: /$base/?page=login");
   }
 }
 
@@ -14,7 +14,7 @@ function body(){
 
 ?>
 
-<form class="form-horizontal" method="POST" action="register">
+<form class="form-horizontal" method="POST" action="?page=register">
 <fieldset>
 
 <!-- Form Name -->

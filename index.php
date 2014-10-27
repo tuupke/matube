@@ -26,7 +26,7 @@ if($loggedIn){
     $un = $user->getUsername();
     $wm = "Welcome $un&nbsp;";
     $login = "Logout";
-    $menu = '<li class="active"><a href="upload">Upload video</a></li>';
+    $menu = '<li class="active"><a href="?page=upload">Upload video</a></li>';
 } else {
     $login = "Log in";
 }
@@ -76,7 +76,7 @@ if($loggedIn){
               </div>
             </li>
             <li>
-              <button class="btn btn-sm btn-primary btn-danger" id="logout" onclick="window.location='login'"><span><?php echo $login;?></span><span class="glyphicon"></span></button>
+              <button class="btn btn-sm btn-primary btn-danger" id="logout" onclick="window.location='?page=login'"><span><?php echo $login;?></span><span class="glyphicon"></span></button>
             </li>
           </ul>
       </div><!-- /.navbar-collapse -->
