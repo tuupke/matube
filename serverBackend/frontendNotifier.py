@@ -6,6 +6,7 @@ This is called when the user uploads a file.
 import pika
 import time
 import json
+import sys
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
@@ -15,7 +16,7 @@ channel = connection.channel()
 #channel.queue_declare(queue='newJobs')
 
 task = {
-    'filename' : 'cat.flv',
+    'filename' : sys.argv,
     'email' : 'jmsumrall@gmail.com'
 }
 
