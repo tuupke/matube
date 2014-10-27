@@ -18,7 +18,7 @@ channel = connection.channel()
 channel.queue_declare(queue='processJobs', durable=True)
 
 remotepath = "/videos/"
-filespath = "/usr/share/nginx/html/videos"
+filespath = "/usr/share/nginx/html/videos/"
 
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
