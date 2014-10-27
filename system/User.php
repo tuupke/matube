@@ -115,6 +115,15 @@ class User {
 		return $this->firstName." ".$m.$this->lastName;
 	}
 
+	/**
+	 * Get the email adress of this user
+	 * 
+	 * @return String Returns the email of the user
+	 */
+	public function getMail(){
+		return $this->mail;
+	}
+
 	// ----------------------- Can / Has / Is -----------------------
 	public function isLoggedIn(){
 		return $this->loaded;
