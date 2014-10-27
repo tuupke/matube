@@ -198,7 +198,7 @@ class User {
 			$r = $res[0];
 
     		$hash = $r[5];
-    		if(!password_verify('rasmuslerdorf', $hash)){
+    		if(!password_verify($password, $hash)){
     			return null;
     		}
 			return new User($r[0]);
