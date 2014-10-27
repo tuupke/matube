@@ -39,7 +39,7 @@ def callback(ch, method, properties, body):
 
     retrieve_file(job['workerserver'], job['filename'])
 
-    MatubeEmail('jmsumrall@gmail.com', getPublicIP() + "/videos/" + job['filename'])
+    MatubeEmail(job['email'], getPublicIP() + "/videos/" + job['filename'])
 
 
 
