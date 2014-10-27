@@ -4,6 +4,7 @@ __author__ = 'max'
 import pika
 from utilsForStats import *
 import json
+import thread
 
 class StatusUpdater:
     connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -27,4 +28,4 @@ class StatusUpdater:
     channel.basic_consume(callback,
                           queue='status')
 
-    channel.start_consuming()
+    thread.start_new_thread(channel.start_consuming())
