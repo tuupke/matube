@@ -25,7 +25,7 @@ def retrieve_file(filename):
 
 def give_file_unique_name(filename):
     splitname = filename.split(".")
-    newFilename = splitname[0] + time.time() + "." + splitname[1]
+    newFilename = splitname[0] + str(time.time()) + "." + splitname[1]
     subprocess.check_output("mv " + filespath + filename + " " + filespath + newFilename ,shell=True)
     return newFilename
 
