@@ -5,9 +5,9 @@ import pika
 from utilsForStats import *
 import json
 import threading
+import web
 
-
-msg = ''
+msg = 'hello world'
 
 def statusUpdater():
     connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -36,5 +36,13 @@ def statusUpdater():
 t_msg = threading.Thread(target=statusUpdater)
 t_msg.start()
 
-while(True):
-    print msg
+urls = (
+    '/', 'index')
+
+class index:
+    def GET(self):
+        return msg
+
+if __name__ == "__main__":
+    app = web.application(urls, globals())
+    app.run()
