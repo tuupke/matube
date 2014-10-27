@@ -16,7 +16,7 @@ channel = connection.channel()
 #channel.queue_declare(queue='newJobs')
 
 task = {
-    'filename' : sys.argv,
+    'filename' : sys.argv[1],
     'email' : 'jmsumrall@gmail.com'
 }
 
