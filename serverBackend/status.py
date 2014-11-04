@@ -25,8 +25,10 @@ def getStatus(server):
         status = json.loads(getHealth(server['ip']))
         for key in status.keys():
             server[key] = status[key]
-
-        return server
+        server_tmp = {}
+        for key in server.keys():
+            server_tmp[str(key)] = str(server[key])
+        return server_tmp
     except:
         return "{Server not responding}"
 main()
