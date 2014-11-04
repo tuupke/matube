@@ -8,7 +8,7 @@ def getPublicIP():
     return subprocess.check_output("/sbin/ifconfig eth0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}'",shell=True).strip()
 
 def getFreeMemory():
-    return subprocess.check_output("free -m | grep -n 1 | awk '{print $4}'", shell=True).strip()
+    return subprocess.check_output("free -m | awk '{print $4}'", shell=True).strip().split("\n")[-3]
 
 def getOneMinLoad():
     return subprocess.check_output("uptime",shell=True).split(',')[-3].split(":")[-1].strip()
