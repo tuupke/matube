@@ -16,7 +16,7 @@ switch($action){
             return;
         }
         $size = $sizes[$size];
-        echo `python modifyCloud.py add $size`;
+        echo `python modifyCloud.py add $size 2>&1`;
     break;
 
     case 'delete':
@@ -25,11 +25,11 @@ switch($action){
             echo  'Unknown server';
             return;
         }
-        echo `python modifyCloud.py remove $droplet`;
+        echo `python modifyCloud.py remove $droplet 2>&1`;
     break;
 
     case 'status':
-        echo `python status.py`;
+        echo `python status.py 2>&1`;
     break;
 
 }
