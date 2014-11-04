@@ -18,7 +18,7 @@ class index:
         data["fiveMinLoad"] = getFiveMinLoad()
         data["tenMinLoad"] = getTenMinLoad()
         data["localIP"] = getLocalIP()
-        data["status"] = getStatus()
+        data["jobStatus"] = getStatus()
         return json.dumps(data, indent=4, separators=(',', ': '))
 
     def GET(self):
