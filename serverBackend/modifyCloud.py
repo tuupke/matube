@@ -20,13 +20,13 @@ def main():
         removeServer(serverIP)
 
 def addServer(serverSize):
-    size = '512mb'
+    size_param = '512mb'
     if serverSize == 1:
-        size = '512mb'
+        size_param = '512mb'
     elif serverSize == 2:
-        size = '1024mb'
+        size_param = '1024mb'
     elif serverSize == 3:
-        size = '2048mb'
+        size_param = '2048mb'
     workerIMG = manager.get_my_images()[9]
     # new worker droplet
     droplet = digitalocean.Droplet(token=token,
@@ -34,10 +34,10 @@ def addServer(serverSize):
                                    region='ams3',
                                    ssh_keys=manager.get_all_sshkeys(),
                                    image=workerIMG.id,
-                                   size=size,
+                                   size_slug=size_param,
                                    backups=False,
                                    private_networking=True)
-    print "Created new worker droplet: " + size
+    print "Created new worker droplet: " + size_param
     droplet.create()
     server = {'ip': droplet.ip_address,
                   'name': droplet.name,
