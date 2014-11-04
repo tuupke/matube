@@ -7,8 +7,10 @@ import sys
 def main():
     if (len(sys.argv) == 1) or ('all' in sys.argv[1]):
         servers = get_servers()
+        results = []
         for server in servers:
-            print getStatus(server)
+             results.append(getStatus(server))
+        print json.dumps(results)
 
 def get_servers():
     filename = 'servers.txt'
