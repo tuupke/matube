@@ -34,7 +34,7 @@ def addServer(serverSize):
                                    region='ams3',
                                    ssh_keys=manager.get_all_sshkeys(),
                                    image=workerIMG.id,
-                                   size_slug=size_param,
+                                   size_slug='512mb',
                                    backups=False,
                                    private_networking=True)
     print "Created new worker droplet: " + size_param
