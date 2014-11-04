@@ -11,13 +11,13 @@ def getFreeMemory():
     return subprocess.check_output("free -m | grep -n 1 | awk '{print $4}'", shell=True).strip()
 
 def getOneMinLoad():
-    return subprocess.check_output("uptime | awk '{print $8}'", shell=True).replace(",","").strip()
+    return subprocess.check_output("uptime",shell=True).split(',')[-3].split(":")[-1].strip()
 
 def getFiveMinLoad():
-    return subprocess.check_output("uptime | awk '{print $9}'", shell=True).replace(",","").strip()
+    return subprocess.check_output("uptime",shell=True).split(',')[-2].split(":")[-1].strip()
 
 def getTenMinLoad():
-    return subprocess.check_output("uptime | awk '{print $10}'", shell=True).replace(",","").strip()
+    return subprocess.check_output("uptime",shell=True).split(',')[-1].split(":")[-1].strip()
 
 def getStatus():
     return subprocess.check_output("more /root/status.txt", shell=True)
