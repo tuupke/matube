@@ -1,16 +1,11 @@
+#!/usr/bin/php
 <?php
 
-$lines;
+$lines = `ps aux | grep refreshDO.py`;
 
-exec('ps aux | grep refreshDO.py', $lines);
-
-$debug = time()." ";
-
-if(strpos("none",file_get_contents("servers.txt")) && strpos("python",$lines)!==false){
-	$debug .= "Refreshing";
-	`python refreshDO.py`;
+if(strpos(file_get_contents("/root/html/serverBackend/servers.txt"),"none")!==false && strpos($lines,"python")==false){
+	`python /root/html/serverBackend/refreshDO.py`;
 }
 
-file_put_contents("debug", $debug."\n", FILE_APPEND);
 
 ?>
