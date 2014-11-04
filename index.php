@@ -1,5 +1,5 @@
 <?php
-$base = "";
+$base = "matube/";
 
 function __autoload($cn) {
     include "system/$cn.php";
@@ -25,10 +25,15 @@ if($loggedIn){
     $un = $user->getUsername();
     $wm = "Welcome $un&nbsp;";
     $login = "Logout";
-    $menu = '<li class="active"><a href="?page=upload">Upload video</a></li>';
+    $menu = '<li class=""><a href="?page=upload">Upload video</a></li>';
+    if(true) {
+        $menu .= '<li class=""><a href="?page=status">Server Status</a></li>';
+    }
 } else {
     $login = "Log in";
 }
+
+$menu = str_replace('"><a href="?page='.$page,'active"><a href="?page='.$page, $menu);
 
 ?>
 <html>
@@ -83,8 +88,8 @@ if($loggedIn){
   </nav>
 <div class='container'>
     <div class='col-md-12'>
-        <div class='col-md-2'><?php echo $lMenu; ?></div>
-        <div class='col-md-10'><?php body(); ?></div>
+        <!-- <div class='col-md-2'><?php echo $lMenu; ?></div> -->
+        <div class='col-md-12'><?php body(); ?></div>
     </div>
 </div>
 </body>
