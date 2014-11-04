@@ -1,6 +1,5 @@
 <?php
-
-$base = "matube/";
+$base = "";
 
 function __autoload($cn) {
     include "system/$cn.php";
