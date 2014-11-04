@@ -15,8 +15,8 @@ switch($action){
             echo  'Unknown size: '+$size;
             return;
         }
-        $size = $sizes[$size];
-        echo `python modifyCloud.py add $size 2>&1`;
+        $si = $sizes[$size];
+        echo `python modifyCloud.py add $si 2>&1`;
     break;
 
     case 'delete':
