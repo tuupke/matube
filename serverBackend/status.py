@@ -19,7 +19,7 @@ def get_servers():
     return servers
 
 def getHealth(serverIP):
-    response = urllib2.urlopen("http://" + str(serverIP) + ":8080").read()
+    response = urllib2.urlopen("http://" + str(serverIP) + ":8080", timeout=1).read()
     return response
 
 def getStatus(server):
@@ -32,5 +32,5 @@ def getStatus(server):
             server_tmp[str(key)] = str(server[key])
         return server_tmp
     except:
-        return "{Server not responding}"
+        return {"status": "", "name": "2IN28-worker", "ip": "", "memory": "", "tenMinLoad": "", "localIP": "", "vcpus": "", "private_ip": "", "oneMinLoad": "", "freeMemory": "", "fiveMinLoad": ""}
 main()
