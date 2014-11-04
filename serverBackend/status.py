@@ -9,7 +9,7 @@ def main():
         servers = get_servers()
         results = []
         for server in servers:
-             results.append(getStatus(server))
+            results.append(getStatus(server))
         print json.dumps(results)
 
 def get_servers():
@@ -19,18 +19,19 @@ def get_servers():
     return servers
 
 def getHealth(serverIP):
-    response = urllib2.urlopen("http://" + str(serverIP) + ":8080", timeout=1).read()
+    try:
+        response = urllib2.urlopen("http://" + str(serverIP) + ":8080", timeout=1).read()
+    except:
+        response = "{}"
     return response
 
 def getStatus(server):
-    try:
-        status = json.loads(getHealth(server['ip']))
-        for key in status.keys():
-            server[key] = status[key]
-        server_tmp = {}
-        for key in server.keys():
-            server_tmp[str(key)] = str(server[key])
-        return server_tmp
-    except:
-        return {"status": "", "name": "2IN28-worker", "ip": "", "memory": "", "tenMinLoad": "", "localIP": "", "vcpus": "", "private_ip": "", "oneMinLoad": "", "freeMemory": "", "fiveMinLoad": ""}
+    status = json.loads(getHealth(server['ip']))
+    for key in status.keys():
+        server[key] = status[key]
+    server_tmp = {}
+    for key in server.keys():
+        server_tmp[str(key)] = str(server[key])
+    return server_tmp
+
 main()
