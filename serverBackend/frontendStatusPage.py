@@ -14,25 +14,29 @@ urls = (
     '/frontend', 'frontend',
 )
 
-def getHealth(self, serverIP):
+def getHealth(serverIP):
     response = urllib2.urlopen("http://" + str(serverIP) + ":8080").read()
     return response
 
 def getStatus(server):
-    status = json.loads(self.getHealth(str(server.ip_address)))
-    status['name'] = server.name
-    status['memory'] = server.memory
-    status['vcpus'] = server.vcpus
-    status['disk'] = server.disk
-    status['region'] = server.region
-    status['status'] = server.status
-    status['id'] = server.id
-    status['actions'] = []
-    actions = server.get_actions()
-    for action in actions:
-        action.load()
-        status['actions'].append(action.status)
-    return status
+    try:
+        status = json.loads(getHealth(str(server.ip_address)))
+        status['name'] = server.name
+        status['memory'] = server.memory
+        status['vcpus'] = server.vcpus
+        status['disk'] = server.disk
+        status['region'] = server.region
+        status['status'] = server.status
+        status['id'] = server.id
+        status['actions'] = []
+        actions = server.get_actions()
+        for action in actions:
+            action.load()
+            status['actions'].append(action.status)
+        return status
+    except:
+        return "Server Not responding"
+
 
 class index:
     def GET(self):
@@ -83,6 +87,23 @@ class frontend:
         for server in servers:
             responses.append(server)
         return json.dumps(responses, indent=4, separators=(',', ': '))
+
+class addWorker:
+    def GET(self):
+        workers = []
+
+        workerIMG = manager.get_my_images()[9]
+        # new worker droplet
+        droplet = digitalocean.Droplet(token=token,
+                                       name='2IN28-worker',
+                                       region='ams3',
+                                       ssh_keys=manager.get_all_sshkeys(),
+                                       image=workerIMG.id,
+                                       size='512mb',  # 512MB
+                                       backups=False,
+                                       private_networking=True)
+        print droplet
+        droplet.create()
 
 
 if __name__ == "__main__":
