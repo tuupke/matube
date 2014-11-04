@@ -4,7 +4,7 @@ $result;
 if(isset($_POST['username'])){ // Register account
   $result = User::createUser($_POST);
   if($result['success']){
-    header("location: /$base/?page=login");
+    header("location: /$base?page=login");
   }
 }
 

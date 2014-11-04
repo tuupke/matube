@@ -6,8 +6,8 @@ function uploader(toUploadFile){
     var file = toUploadFile;
     var range_start = 0;
     var range_end = BYTES_PER_CHUNK;
-    var url = "http://localhost/matube/upl.php";
-    var doneF = "http://localhost/matube/upl_done.php";
+    var url = "http://matube.gehack.nl/upl.php";
+    var doneF = "http://matube.gehack.nl/upl_done.php";
     var xmlhttp = new XMLHttpRequest();
     var name = false;
 
