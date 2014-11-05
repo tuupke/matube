@@ -32,13 +32,12 @@ def addServer(serverSize):
     for img in images:
         if 'worker' in str(img):
             worker_img = img
-    print worker_img
     # new worker droplet
     droplet = digitalocean.Droplet(token=token,
                                    name='2IN28-worker',
                                    region='ams3',
                                    ssh_keys=manager.get_all_sshkeys(),
-                                   image=worker_img,
+                                   image=worker_img.id,
                                    size_slug='512mb',
                                    backups=False,
                                    private_networking=True)
