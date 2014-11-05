@@ -26,7 +26,7 @@ if($loggedIn){
     $wm = "Welcome $un&nbsp;";
     $login = "Logout";
     $menu = '<li class=""><a href="?page=upload">Upload video</a></li>';
-    if(true) {
+    if($entity->isAdmin()) {
         $menu .= '<li class=""><a href="?page=status">Server Status</a></li>';
     }
 } else {
