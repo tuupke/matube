@@ -48,7 +48,9 @@ def addServer(serverSize):
                   'memory': droplet.memory,
                   'vcpus': droplet.vcpus,
                   'private_ip': droplet.private_ip_address}
+    print servers
     servers.append(server)
+    print servers
     fp = open(filename,'w')
     json.dump(servers,fp)
     fp.close()
