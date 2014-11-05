@@ -5,7 +5,7 @@ import json
 token = "f32d2fa8bbc1199eb4c079a1f70de31155778c1f0aef9e17226ce3869dd51a81"
 
 manager = digitalocean.Manager(token=token)
-filename = 'servers.txt'
+filename = '/usr/share/nginx/matube/serverBackend/servers.txt'
 fp = open(filename,'w')
 servers = []
 drops = manager.get_all_droplets()
@@ -18,7 +18,6 @@ for drop in drops:
                   'private_ip': drop.private_ip_address}
         servers.append(server)
 
-filename = 'servers.txt'
 fp = open(filename,'w')
 json.dump(servers, fp)
 fp.close()

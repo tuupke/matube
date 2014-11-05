@@ -6,7 +6,7 @@ import sys
 token = "f32d2fa8bbc1199eb4c079a1f70de31155778c1f0aef9e17226ce3869dd51a81"
 
 manager = digitalocean.Manager(token=token)
-filename = 'servers.txt'
+filename = '/usr/share/nginx/matube/serverBackend/servers.txt'
 fp = open(filename, 'r')
 servers = json.load(fp)
 fp.close()
