@@ -21,7 +21,7 @@ $hName = $_POST['videoName'];
 $public = $_POST['visibility'];
 
 $db->nquery("insert into video (status, name, storage, description, ownedBy, public) values (?,?,?,?,?,?)", 
-	array(0,$hName, $name, $description, $user->getId(), $public));
+	array(0,$hName, "$name.$ext", $description, $user->getId(), $public));
 
 $email = $user->getMail();
 `python ./serverBackend/frontendNotifier.py $video $email`;
