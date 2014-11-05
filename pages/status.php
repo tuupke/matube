@@ -169,7 +169,7 @@ function parseResponse(response){
 			html += "<tr><td><b><u>" + ob.name + " offline!</u></b></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 		}
 	}
-	html += "</tbody></table>";
+	html += "</tbody></table><br /><button type=\"button\" class=\"btn btn-success\" onclick=\"newServer()\">New server <span class=\"glyphicon glyphicon-plus-sign\"></span></button>";
 	var status = document.getElementById('status');
 	status.innerHTML = html;
 	for(var i = 0; i < newLines.length; i++)
