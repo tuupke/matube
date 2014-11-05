@@ -42,11 +42,12 @@ def deleteProcessedVideos(file1, file2):
     subprocess.check_output("rm " + filespath + file1 + " " + filespath + file2, shell=True)
 
 def encodeFile(filename):
-    encodedfilename = filename.split(".")[0] + ".ogg"
+    encodedfilename = filename.split(".")[0] + ".mp4"
 
     c = Converter()
+    # thumbnail 196x110
     options = {
-        'format': 'mkv',
+        'format': 'mp4',
         'audio': {
             'codec': 'mp3',
             'samplerate': 11025,
@@ -65,6 +66,7 @@ def encodeFile(filename):
     }
 
     conv = c.convert(filespath + filename, filespath + encodedfilename, options)
+    c.thumbnail(filespath + filename, 10, filespath + (encodedfilename.split(",")[0] + ".jpg"), '196x110')
 
     for timecode in conv:
         sys.stdout.write("\r%d%%" % timecode)
