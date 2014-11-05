@@ -18,8 +18,11 @@ Pellentesque imperdiet condimentum nisl. Vestibulum vestibulum ipsum et leo port
 	if(count($r)){
 		foreach($r as $v){
 
-			$v = $db->query("select * from video where id=?",array($v[0]),PDO::FETCH_BOTH)[0];
-
+			$v = $db->query("select * from video where id=?",array($v[0]),PDO::FETCH_BOTH);
+			if(!count($v)){
+				continue;
+			}
+			$v = $v[0];
 			?>
 			<a href='index.php?page=view&id=<?php echo $v['id']; ?>'>
 				<div class="panel panel-primary">
@@ -27,7 +30,7 @@ Pellentesque imperdiet condimentum nisl. Vestibulum vestibulum ipsum et leo port
 						<h3 class="panel-title"><?php echo $v['name']; ?></h3>
 					</div>
 					<div class="panel-body">
-						<img style='display: inline; float: left; margin-right: 15px;' src='' width="196px" height="110px" /><span style='height: 110px; overflow: hidden;'><div style='max-height: 110px; overflow: hidden;'><?php echo $v['description']; ?></div></span>
+						<img style='display: inline; float: left; margin-right: 15px;' src='' width="196px" height="110px" /><span style='height: 110px; overflow: hidden;'><div style='max-height: 110px; overflow: hidden;'><?php echo nl2br(htmlspecialchars($v['description'])); ?></div></span>
 					</div>
 				</div>
 			</a>
