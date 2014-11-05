@@ -21,7 +21,7 @@ def get_servers():
 
 def getHealth(serverIP):
     try:
-        response = subprocess.check_output("curl" + str(serverIP) + ":8080",shell=True)
+        response = subprocess.check_output("curl" + str(serverIP) + ":8080",shell=True).replace("\n", "")
         #response = urllib2.urlopen("http://" + str(serverIP) + ":8080", timeout=1).read()
     except:
         response = "{}"
