@@ -1,8 +1,7 @@
 <?php
 
-
 function body(){
-global $base;
+          global $base;
 ?>
 
             <script src="/<?php echo $base; ?>js/uploader.js"></script>            
@@ -10,6 +9,21 @@ global $base;
               <div style='min-height:220px;'>
               <label for="videoName">Name</label>
                 <input id="videoName" name="videoName" type="text" placeholder="Name" class="form-control input-md"><br />
+              <label for="description">Description</label>
+                <textarea class="form-control input-md" placeholder="Video description" id='description' rows=8></textarea><br />
+              <label for="description">Visibility</label>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" id="public" value="option1" checked>
+                  Public
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" id="private" value="option2">
+                  Private
+                </label>
+              </div><br />
               <label for="file">Video</label><br />
                 <span>Please select a video to upload</span><span class='fileUpload'><input type="file" class='upload' name="file" id="file" onchange="new uploader(this.files[0])" /></span><br />
                 <div style='width: 100%; height: 40px; position: relative;'> 

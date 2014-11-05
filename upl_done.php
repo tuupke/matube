@@ -1,8 +1,8 @@
 <?php
 
-$video = $_GET['video'];
-$ext = $_GET['ext'];
-$name = $_GET['name'];
+$video = $_POST['video'];
+$ext = $_POST['ext'];
+$name = $_POST['name'];
 
 function __autoload($cn) {
     include "system/$cn.php";
@@ -16,9 +16,12 @@ if(!$user->isLoggedIn()){
 	exit;
 }
 
-$description = "Lorem Ipsum";
+$description = $_POST['description'];
+$hName = $_POST['videoName'];
+$public = $_POST['visibility'];
 
-$db->nquery("insert into video (status, name, storage, description, ownedBy) values (?,?,?,?,?)", array(0,$name, "", $description, $user->getId()));
+$db->nquery("insert into video (status, name, storage, description, ownedBy, public) values (?,?,?,?,?,?)", 
+	array(0,$hName, "", $description, $user->getId(), $public));
 
 $email = $user->getMail();
 `python ./serverBackend/frontendNotifier.py $video $email`;

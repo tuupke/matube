@@ -124,6 +124,10 @@ class User {
 		return $this->mail;
 	}
 
+	public function getId(){
+		return $this->userId;
+	}
+
 	// ----------------------- Can / Has / Is -----------------------
 	public function isLoggedIn(){
 		return $this->loaded;
