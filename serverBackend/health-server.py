@@ -22,6 +22,7 @@ class index:
         return json.dumps(data, indent=4, separators=(',', ': '))
 
     def GET(self):
+        print self.getHealth()
         return self.getHealth()
 
 
