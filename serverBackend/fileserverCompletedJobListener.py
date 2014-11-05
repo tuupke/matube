@@ -9,6 +9,7 @@ import json
 from MatubeEmail import *
 from utilsForStats import *
 import subprocess
+import requests
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='10.133.234.184'))
@@ -38,8 +39,10 @@ def callback(ch, method, properties, body):
     job = json.loads(body)
 
     retrieve_file(job['workerserver'], job['filename'])
+    retrieve_file(job['workerserver'], job['filename'].split(",")[0] + ".jpg")
 
     MatubeEmail(job['email'], getPublicIP() + "/videos/" + job['filename'])
+    r = requests.get('conv_done.php?newName=' + job['filename'] + '&oldName=' + job['oldFilename'] + '&hash=41dc8c4ced0a3ec02593499f3f58fec306dc58903c054abaff5045ee9f189a96')
 
 
 
