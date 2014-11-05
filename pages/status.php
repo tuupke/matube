@@ -141,7 +141,7 @@ function parseResponse(response){
 	console.log(response);
 	var json = JSON.parse(response);
 
-	var html = "<table><thead><tr><th>Name</th><th>IP</th><th>Memory (MB)</th><th># CPUs</th><th>Load</th><th>Disk (GB)</th><th>Actions</th></tr></thead><tbody>";
+	var html = "<table><thead><tr><th>Name</th><th>IP</th><th>Memory (MB)</th><th># CPUs</th><th>Load</th><th>Job status</th><th>Actions</th></tr></thead><tbody>";
 	for(var i in json){
 		var ob = json[i];
 		var freeMem = ob.freeMemory;
@@ -161,7 +161,7 @@ function parseResponse(response){
 						ob.memory + " (Free: " + freeMem + ", "+percentage+"%)" + "</td><td>" +
 						ob.vcpus+ "</td><td>" +
 						ob.tenMinLoad+" "+ ob.fiveMinLoad.replace('average:','0.00')+" "+ob.oneMinLoad.replace('load','0.00') + "</td><td>" +
-						ob.disk + "</td><td>" +
+						ob.jobStatus.replace("\n","") + "</td><td>" +
 						
 						"<button type=\"button\" class=\"btn btn-danger\" onclick=\"confirmDelete('" + ob.ip + "','" + ob.name + "',this.parentNode)\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>" + "</td><td>" +
 					"</td></tr>";
