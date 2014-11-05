@@ -166,7 +166,10 @@ function parseResponse(response){
 						"<button type=\"button\" class=\"btn btn-danger\" onclick=\"confirmDelete('" + ob.ip + "','" + ob.name + "',this.parentNode)\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>" + "</td><td>" +
 					"</td></tr>";
 		} else {
-			html += "<tr><td><b><u>" + ob.name + " offline!</u></b></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+			if(ob.memory == "None")
+				html += "<tr><td><b><u>Creating " + ob.name + "</u></b></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+			else
+				html += "<tr><td><b><u>" + ob.name + " offline!</u></b></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 		}
 	}
 	html += "</tbody></table><br /><button type=\"button\" class=\"btn btn-success\" onclick=\"newServer()\">New server <span class=\"glyphicon glyphicon-plus-sign\"></span></button>";
