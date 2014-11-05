@@ -32,7 +32,7 @@ switch($action){
     break;
 
     case 'delete':
-        if(strpos($droplet,file_get_contents("servers.txt"))===false){
+        if(strpos(file_get_contents("servers.txt"), $droplet)===false){
             http_response_code(500);
             echo  'Unknown server';
             return;
