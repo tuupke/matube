@@ -49,7 +49,7 @@ def encodeFile(filename):
     options = {
         'format': 'mp4',
         'audio': {
-            'codec': 'mp3',
+            'codec': 'aac',
             'samplerate': 11025,
             'channels': 2
         },
@@ -59,14 +59,11 @@ def encodeFile(filename):
             'height': 400,
             'fps': 15
         },
-        'subtitle': {
-            'codec': 'copy'
-        },
         'map': 0
     }
 
     conv = c.convert(filespath + filename, filespath + encodedfilename, options)
-    c.thumbnail(filespath + filename, 10, filespath + (encodedfilename.split(",")[0] + ".jpg"), '196x110')
+    c.thumbnail(filespath + filename, 10, filespath + (encodedfilename.split(".")[0] + ".jpg"), '196x110')
 
     for timecode in conv:
         sys.stdout.write("\r%d%%" % timecode)
