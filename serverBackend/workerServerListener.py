@@ -49,7 +49,7 @@ def encodeFile(filename):
     options = {
         'format': 'mp4',
         'audio': {
-            'codec': 'mp3',
+            'codec': 'aac',
             'samplerate': 11025,
             'channels': 2
         },
