@@ -48,11 +48,6 @@ def encodeFile(filename):
     # thumbnail 196x110
     options = {
         'format': 'mp4',
-        'audio': {
-            'codec': 'mp3',
-            'samplerate': 11025,
-            'channels': 2
-        },
         'video': {
             'codec': 'h264',
             'width': 720,
