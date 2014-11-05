@@ -8,7 +8,7 @@ if(!isset($_GET['newName']) || !isset($_GET['oldName']) || !isset($_GET['hash'])
 $id = $_GET['newName'];
 $old = $_GET['oldName'];
 
-require_once("system/database.php");
+require_once("system/Database.php");
 
 $db = new Database();
 
