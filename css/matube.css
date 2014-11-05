@@ -14,3 +14,11 @@
     80% {background-color: green}
     100% {background-color: purple}
 }
+
+#usernameField {
+    padding: 15px;
+}
+
+#logout {
+    margin-top: 9px;
+}
