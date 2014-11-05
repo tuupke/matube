@@ -20,13 +20,14 @@ def get_servers():
 
 def getHealth(serverIP):
     try:
-        response = urllib2.urlopen("http://" + str(serverIP) + ":8080", timeout=5).read()
+
+        response = urllib2.urlopen("http://" + str(serverIP)+"/raw_health.html", timeout=1).read()
     except:
         response = "{}"
     return response
 
 def getStatus(server):
-    status = json.loads(getHealth(server['ip']))
+    status = json.loads(getHealth(server['private_ip']))
     for key in status.keys():
         server[key] = status[key]
     server_tmp = {}

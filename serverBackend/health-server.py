@@ -1,17 +1,18 @@
 #!/usr/bin/python
-import web
-import subprocess
-import json
 from utilsForStats import *
+import threading
+import json
 
-urls = (
-    '/', 'index',
-    '/syncPK', 'syncPK'
-)
+def main():
+    printit()
 
-class index:
 
-    def getHealth(self):
+def printit():
+  threading.Timer(5.0, printit).start()
+  writeOut(getHealth())
+
+
+def getHealth():
         data = {}
         data["freeMemory"] = getFreeMemory()
         data["oneMinLoad"] = getOneMinLoad()
@@ -21,11 +22,11 @@ class index:
         data["jobStatus"] = getStatus()
         return json.dumps(data, indent=4, separators=(',', ': '))
 
-    def GET(self):
-        return self.getHealth()
+def writeOut(text):
+    filename = "/usr/share/nginx/html/raw_health.html"
+    f = open(filename, 'w')
+    f.write(text)
+    f.close()
 
 
-
-if __name__ == "__main__":
-    app = web.application(urls, globals())
-    app.run()
+main()

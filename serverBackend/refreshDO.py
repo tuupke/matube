@@ -10,7 +10,7 @@ fp = open(filename,'w')
 servers = []
 drops = manager.get_all_droplets()
 for drop in drops:
-    if "2IN28" in drop.name:
+    if ("fileserver" in drop.name) or ("worker" in drop.name):
         server = {'ip': drop.ip_address,
                   'name': drop.name,
                   'memory': drop.memory,
