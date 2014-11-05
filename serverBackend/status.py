@@ -27,7 +27,7 @@ def getHealth(serverIP):
     return response
 
 def getStatus(server):
-    status = json.loads(getHealth(server['private_address']))
+    status = json.loads(getHealth(server['private_ip_address']))
     for key in status.keys():
         server[key] = status[key]
     server_tmp = {}
