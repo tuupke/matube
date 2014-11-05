@@ -16,6 +16,10 @@ if(!$user->isLoggedIn()){
 	exit;
 }
 
+$description = "Lorem Ipsum";
+
+$db->nquery("insert into video (status, name, storage, description, ownedBy) values (?,?,?,?,?)", array(0,$name, "", $description, $user->getId()));
+
 $email = $user->getMail();
 `python ./serverBackend/frontendNotifier.py $video $email`;
 ?>

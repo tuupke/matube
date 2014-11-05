@@ -8,6 +8,8 @@ More comment work
 */
 class Entity {
 
+	const ADMINISTRATOR = 0;
+
 	/** Middle name of this entity */
 	private $name = "";
 
@@ -270,6 +272,10 @@ class Entity {
 			$overChildren = call_user_func_array('array_merge', $res);
 		}
 		return false;
+	}
+
+	public function isAdmin(){
+		return in_array($this::ADMINISTRATOR, $this->parents);
 	}
 
 	// --------------------------- Internals --------------------------

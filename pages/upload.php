@@ -5,10 +5,12 @@ function body(){
 global $base;
 ?>
 
-            <script src="/<?php echo $base; ?>js/uploader.js"></script>
+            <script src="/<?php echo $base; ?>js/uploader.js"></script>            
             <div id="fileGroup"class="form-group"> 
-              <label for="file">Video</label> 
-              <div class="form-control" style='min-height:120px;'>
+              <div style='min-height:220px;'>
+              <label for="videoName">Name</label>
+                <input id="videoName" name="videoName" type="text" placeholder="Name" class="form-control input-md"><br />
+              <label for="file">Video</label><br />
                 <span>Please select a video to upload</span><span class='fileUpload'><input type="file" class='upload' name="file" id="file" onchange="new uploader(this.files[0])" /></span><br />
                 <div style='width: 100%; height: 40px; position: relative;'> 
                   <div style='border-radius: 3px; -webkit-animation: super-rainbow 15s infinite linear; -moz-animation: super-rainbow 15s infinite linear; position: absolute; top: 0px; left: 0px; height: 40px; width: 100%;'></div> 

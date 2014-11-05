@@ -3,11 +3,14 @@
 
 function body(){
 ?>
-
-<div class="form-group">
-    <input id="search" name="search" type="text" placeholder="" class="form-control input-md" required=""><button id="button" name="button" class="btn btn-success" onclick="window.location='?page=search&options='+encodeURIComponent(document.getElementById('search').value)">Search</button>
-</div>
-
+<form onsubmit="window.location='index.php?page=search&search='+document.getElementById('search').value;return false;">
+    <div class="input-group">
+		<input type="text" class="form-control" id='search' placeholder="Search">
+		<span class="input-group-btn">
+			<button class="btn btn-success" type="submit">Search</button>
+		</span>
+	</div>
+</form>
 <?php
 
 }

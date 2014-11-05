@@ -2,6 +2,18 @@
 
 set_time_limit(0);
 
+function __autoload($cn) {
+    include "../system/$cn.php";
+}
+
+$db = new Database();
+
+$user = new User();
+$entity = $user->getEntity();
+if(!$entity->isAdmin()){
+    exit;
+}
+
 $action = isset($_POST['action'])?$_POST['action']:"status";
 $droplet = isset($_POST['id'])?$_POST['id']:"";
 $size = isset($_POST['size'])?$_POST['size']:"";

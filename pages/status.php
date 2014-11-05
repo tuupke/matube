@@ -1,8 +1,11 @@
 <?php
 
 error_reporting(E_ALL);
-if(false){
-    header('location: index.php');
+
+global $entity;
+
+if(!$entity->isAdmin()){
+    exit;
 }
 
 
@@ -142,24 +145,29 @@ function parseResponse(response){
 	for(var i in json){
 		var ob = json[i];
 		var freeMem = ob.freeMemory;
-		if(freeMem.indexOf("\n")>-1){
-			freeMem = freeMem.split("\n")[0];
+		// window.alert(freeMem);
+		if(freeMem){
+			if(freeMem.indexOf("\n")>-1){
+				freeMem = freeMem.split("\n")[0];
+			}
+			var percentage = Math.round((freeMem) / (ob.memory) * 100);
+			var clss = "";
+			if(busyIds[ob.id]){
+				clss="class='busy'";
+			}
+			html += "<tr " + clss + "><td>" +
+						ob.name + "</td><td>" +
+						ob.localIP + "</td><td>" +
+						ob.memory + " (Free: " + freeMem + ", "+percentage+"%)" + "</td><td>" +
+						ob.vcpus+ "</td><td>" +
+						ob.tenMinLoad+" "+ ob.fiveMinLoad.replace('average:','0.00')+" "+ob.oneMinLoad.replace('load','0.00') + "</td><td>" +
+						ob.disk + "</td><td>" +
+						
+						"<button type=\"button\" class=\"btn btn-danger\" onclick=\"confirmDelete('" + ob.localIP + "','" + ob.name + "',this.parentNode)\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>" + "</td><td>" +
+					"</td></tr>";
+		} else {
+			html += "<tr><td><b><u>" + ob.name + " offline!</u></b></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 		}
-		var percentage = Math.round((freeMem) / (ob.memory) * 100);
-		var clss = "";
-		if(busyIds[ob.id]){
-			clss="class='busy'";
-		}
-		html += "<tr " + clss + "><td>" +
-					ob.name + "</td><td>" +
-					ob.localIP + "</td><td>" +
-					ob.memory + " (Free: " + freeMem + ", "+percentage+"%)" + "</td><td>" +
-					ob.vcpus+ "</td><td>" +
-					ob.tenMinLoad+" "+ ob.fiveMinLoad.replace('average:','0.00')+" "+ob.oneMinLoad.replace('load','0.00') + "</td><td>" +
-					ob.disk + "</td><td>" +
-					
-					"<button type=\"button\" class=\"btn btn-danger\" onclick=\"confirmDelete('" + ob.localIP + "','" + ob.name + "',this.parentNode)\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>" + "</td><td>" +
-				"</td></tr>";
 	}
 	html += "</tbody></table>";
 	var status = document.getElementById('status');
