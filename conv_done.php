@@ -18,7 +18,7 @@ $ignore = array("the", "one", "a");
 if(count($res)==1) {
 	$db->nquery("update video set status=1, storage=? where storage=?",array($id, $old));
 	$res = $res[0];
-
+	$id = $res[0];
 	$name = explode(" ", $res[2]);
 	
 	foreach($name as $n){

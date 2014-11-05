@@ -18,8 +18,11 @@ Pellentesque imperdiet condimentum nisl. Vestibulum vestibulum ipsum et leo port
 	if(count($r)){
 		foreach($r as $v){
 
-			$v = $db->query("select * from video where id=?",array($v[0]),PDO::FETCH_BOTH)[0];
-
+			$v = $db->query("select * from video where id=?",array($v[0]),PDO::FETCH_BOTH);
+			if(!count($v)){
+				continue;
+			}
+			$v = $v[0];
 			?>
 			<a href='index.php?page=view&id=<?php echo $v['id']; ?>'>
 				<div class="panel panel-primary">
