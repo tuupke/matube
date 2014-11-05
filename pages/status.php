@@ -157,13 +157,13 @@ function parseResponse(response){
 			}
 			html += "<tr " + clss + "><td>" +
 						ob.name + "</td><td>" +
-						ob.localIP + "</td><td>" +
+						ob.ip + "</td><td>" +
 						ob.memory + " (Free: " + freeMem + ", "+percentage+"%)" + "</td><td>" +
 						ob.vcpus+ "</td><td>" +
 						ob.tenMinLoad+" "+ ob.fiveMinLoad.replace('average:','0.00')+" "+ob.oneMinLoad.replace('load','0.00') + "</td><td>" +
 						ob.disk + "</td><td>" +
 						
-						"<button type=\"button\" class=\"btn btn-danger\" onclick=\"confirmDelete('" + ob.localIP + "','" + ob.name + "',this.parentNode)\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>" + "</td><td>" +
+						"<button type=\"button\" class=\"btn btn-danger\" onclick=\"confirmDelete('" + ob.ip + "','" + ob.name + "',this.parentNode)\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>" + "</td><td>" +
 					"</td></tr>";
 		} else {
 			html += "<tr><td><b><u>" + ob.name + " offline!</u></b></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
