@@ -12,7 +12,7 @@ def printit():
   writeOut(getHealth())
 
 
-def getHealth(self):
+def getHealth():
         data = {}
         data["freeMemory"] = getFreeMemory()
         data["oneMinLoad"] = getOneMinLoad()
