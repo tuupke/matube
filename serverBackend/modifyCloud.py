@@ -7,9 +7,9 @@ token = "f32d2fa8bbc1199eb4c079a1f70de31155778c1f0aef9e17226ce3869dd51a81"
 
 manager = digitalocean.Manager(token=token)
 filename = 'servers.txt'
-fp = open(filename,'r')
+fp = open(filename, 'r')
 servers = json.load(fp)
-
+fp.close()
 
 def main():
     if sys.argv[1] == "add":
