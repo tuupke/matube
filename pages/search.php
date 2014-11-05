@@ -1,5 +1,7 @@
 <?php
 
+global $user;
+
 if(!isset($_GET['search'])){
 	header("location: /$base");
 }
@@ -7,8 +9,8 @@ if(!isset($_GET['search'])){
 $search = urldecode($_GET['search']);
 $search = implode("|", explode(" ", $search));
 
-$r = $db->query("select *,count(*) as cnt from tags where tag REGEXP ? group by videoId", array($search));
-
+$r = $db->query("select *,count(*) as cnt from tags where tag REGEXP ? and (public=1 or ownedBy=?) group by videoId", array($search, $user->getId()));
+// print_r($r);
 function body(){
 	global $r, $db;
 	$li = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eros diam, varius vel tincidunt quis, faucibus nec diam. Morbi scelerisque, erat nec volutpat pellentesque, lacus augue lacinia quam, sed pellentesque lorem turpis id dui. Curabitur quis dui rutrum, faucibus ante at, sagittis nisl. Praesent a molestie ligula. Quisque accumsan justo malesuada neque sollicitudin, a pulvinar nibh varius. Fusce quis ipsum elit. Mauris diam ex, cursus et sollicitudin sed, dictum eget erat. Phasellus placerat id massa in ultrices. Sed accumsan, orci in pharetra lobortis, ante nibh lobortis libero, a vulputate tortor mi quis turpis. Duis nec sapien placerat, iaculis mauris et, pulvinar nulla.
@@ -17,20 +19,25 @@ Pellentesque imperdiet condimentum nisl. Vestibulum vestibulum ipsum et leo port
 
 	if(count($r)){
 		foreach($r as $v){
+			$v = $db->query("select * from video, `user` where video.id=? and video.ownedBy=`user`.entityId",array($v[0]),PDO::FETCH_BOTH);
 
-			$v = $db->query("select * from video where id=?",array($v[0]),PDO::FETCH_BOTH);
 			if(!count($v)){
 				continue;
 			}
+
 			$v = $v[0];
+			
 			?>
-			<a href='index.php?page=view&id=<?php echo $v['id']; ?>'>
+			<a href='index.php?page=view&id=<?php echo $v[0]; ?>'>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title"><?php echo $v['name']; ?></h3>
 					</div>
 					<div class="panel-body">
 						<img style='display: inline; float: left; margin-right: 15px;' src='' width="196px" height="110px" /><span style='height: 110px; overflow: hidden;'><div style='max-height: 110px; overflow: hidden;'><?php echo nl2br(htmlspecialchars($v['description'])); ?></div></span>
+					</div>
+					<div style="margin-left: 15px; margin-bottom: 15px;">
+						Uploaded by: <b><?php echo $v['username']; ?></b>
 					</div>
 				</div>
 			</a>
