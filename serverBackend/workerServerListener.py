@@ -47,7 +47,19 @@ def encodeFile(filename):
     c = Converter()
     # thumbnail 196x110
     options = {
-        'format': 'mp4'
+        'format': 'mp4',
+        'audio': {
+            'codec': 'mp3',
+            'samplerate': 11025,
+            'channels': 2
+        },
+        'video': {
+            'codec': 'h264',
+            'width': 720,
+            'height': 400,
+            'fps': 15
+        },
+        'map': 0
     }
 
     conv = c.convert(filespath + filename, filespath + encodedfilename, options)
