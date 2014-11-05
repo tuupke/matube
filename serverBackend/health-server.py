@@ -24,7 +24,7 @@ def getHealth():
 
 def writeOut(text):
     filename = "/usr/share/nginx/html/raw_health.html"
-    f = file(filename, 'w')
+    f = open(filename, 'w')
     f.write(text)
     f.close()
 
