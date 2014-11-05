@@ -23,8 +23,8 @@ def getHealth():
         return json.dumps(data, indent=4, separators=(',', ': '))
 
 def writeOut(text):
-    filename = "/usr/share/nginx/html/index.html"
-    f = open(filename, 'w')
+    filename = "/usr/share/nginx/html/raw_health.html"
+    f = file(filename, 'w')
     f.write(text)
     f.close()
 
