@@ -7,9 +7,9 @@ token = "f32d2fa8bbc1199eb4c079a1f70de31155778c1f0aef9e17226ce3869dd51a81"
 
 manager = digitalocean.Manager(token=token)
 filename = 'servers.txt'
-fp = open(filename,'r')
+fp = open(filename, 'r')
 servers = json.load(fp)
-
+fp.close()
 
 def main():
     if sys.argv[1] == "add":
@@ -27,13 +27,17 @@ def addServer(serverSize):
         size_param = '1024mb'
     elif serverSize == 3:
         size_param = '2048mb'
-    workerIMG = manager.get_my_images()[9]
+    images = manager.get_my_images()
+    worker_img = images[0]
+    for img in images:
+        if 'worker' in str(img):
+            worker_img = img
     # new worker droplet
     droplet = digitalocean.Droplet(token=token,
                                    name='2IN28-worker',
                                    region='ams3',
                                    ssh_keys=manager.get_all_sshkeys(),
-                                   image=workerIMG.id,
+                                   image=worker_img.id,
                                    size_slug='512mb',
                                    backups=False,
                                    private_networking=True)

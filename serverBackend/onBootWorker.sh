@@ -1,4 +1,4 @@
-git -C /usr/share/nginx/matube/ pull
-screen -d -m python /usr/share/nginx/matube/serverBackend/health-server.py
-screen -d -m python /usr/share/nginx/matube/serverBackend/workerServerListener.py
+git -C /root/matube/ pull
+screen -d -m python /root/matube/serverBackend/health-server.py
+screen -d -m python /root/matube/serverBackend/workerServerListener.py
 echo " Started health-server and server listener"
