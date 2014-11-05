@@ -40,8 +40,10 @@ def callback(ch, method, properties, body):
 
     retrieve_file(job['workerserver'], job['filename'])
     retrieve_file(job['workerserver'], job['filename'].split(".")[0] + ".jpg")
-
-    MatubeEmail(job['email'], getPublicIP() + "/videos/" + job['filename'])
+    try:
+        MatubeEmail(job['email'], getPublicIP() + "/videos/" + job['filename'])
+    except:
+        pass
     r = requests.get('http://178.62.239.233/conv_done.php?newName=' + job['filename'] + '&oldName=' + job['oldFilename'] + '&hash=41dc8c4ced0a3ec02593499f3f58fec306dc58903c054abaff5045ee9f189a96')
 
 
