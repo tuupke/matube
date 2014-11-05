@@ -93,6 +93,7 @@ def callback(ch, method, properties, body):
     #deleteProcessedVideos(job['filename'], encodedfile)
 
     job['workerserver'] = getLocalIP()
+    job['oldFilename'] = job['filename']
     job['filename'] = encodedfile
 
 
