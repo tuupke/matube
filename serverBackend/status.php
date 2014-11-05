@@ -32,7 +32,7 @@ switch($action){
     break;
 
     case 'delete':
-        if(!preg_match("/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/")){
+        if(strpos(file_get_contents("servers.txt"), $droplet)===false){
             http_response_code(500);
             echo  'Unknown server';
             return;

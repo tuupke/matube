@@ -1,20 +1,21 @@
 <?php
 
-if(!isset($_GET['id'])){
+if(!isset($_GET['newName']) || !isset($_GET['oldName']) || !isset($_GET['hash']) || $_GET['hash']!="41dc8c4ced0a3ec02593499f3f58fec306dc58903c054abaff5045ee9f189a96"){
 	exit;
 }
 
-$id = $_GET['id'];
+$id = $_GET['newName'];
+$old = $_GET['oldName'];
 
 require_once("system/database.php");
 
 $db = new Database();
 
-$res = $db->query("select * from video where id=?", array($id));
+$res = $db->query("select * from video where storage=?", array($id));
 
 $ignore = array("the", "one", "a");
 if(count($res)==1) {
-	$db->nquery("update video set status = 1 where id=?",array($id));
+	$db->nquery("update video set status = 1,storage= ? where storage=?",array($id, $oldName));
 	$res = $res[0];
 
 	$name = explode(" ", $res[2]);
@@ -26,6 +27,5 @@ if(count($res)==1) {
 		$db->nquery("insert into tags values (?, ?)", array($id, $n));
 	}
 }
-
 
 ?>
