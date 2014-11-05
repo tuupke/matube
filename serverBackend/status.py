@@ -3,6 +3,7 @@ import digitalocean
 import json
 import urllib2
 import sys
+import subprocess
 
 def main():
     if (len(sys.argv) == 1) or ('all' in sys.argv[1]):
@@ -20,7 +21,8 @@ def get_servers():
 
 def getHealth(serverIP):
     try:
-        response = urllib2.urlopen("http://" + str(serverIP) + ":8080", timeout=1).read()
+        response = subprocess.check_output("curl" + str(serverIP) + ":8080",shell=True)
+        #response = urllib2.urlopen("http://" + str(serverIP) + ":8080", timeout=1).read()
     except:
         response = "{}"
     return response
