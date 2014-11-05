@@ -115,4 +115,6 @@ channel.basic_qos(prefetch_count=1)
 channel.basic_consume(callback,
                       queue='processJobs')
 
+sendStatusMessage('idle', '')
+
 channel.start_consuming()
