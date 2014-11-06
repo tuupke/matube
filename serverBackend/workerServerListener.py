@@ -38,7 +38,7 @@ def sendStatusMessage(status, progress):
 
 def update_eta(running_time, progress):
     f = file('/root/eta.txt','w')
-    val = (((int(running_time) / progress) * 100) - int(running_time))
+    val = ((running_time / progress) * 100 ) - running_time
     print val
     f.write(str(val))
     f.close()
@@ -86,7 +86,7 @@ def encodeFile(filename, startTime):
         sys.stdout.write("\r%d%%" % timecode)
         sys.stdout.flush()
         sendStatusMessage('encoding', timecode)
-        runningTime = int(time.time()) - int(startTime)
+        runningTime = time.time() - startTime
         update_eta(runningTime, timecode)
     print "\n Complete"
     return encodedfilename
