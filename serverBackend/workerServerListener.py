@@ -44,7 +44,7 @@ def update_eta(running_time, progress):
 
 def reset_eta_status():
     f = file('/root/eta.txt','w')
-    f.write(str(2**32))
+    f.write(str(-1))
     f.close()
     f = file('/root/status.txt','w')
     f.write('idle')
