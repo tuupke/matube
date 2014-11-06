@@ -18,8 +18,6 @@ $action = isset($_POST['action'])?$_POST['action']:"status";
 $droplet = isset($_POST['id'])?$_POST['id']:"";
 $size = isset($_POST['size'])?$_POST['size']:"";
 
-$sizes = array("small" => 1, "medium" => 2, "large" => 3);
-
 switch($action){
     case 'new':
         if(!array_key_exists($size, $sizes)){
@@ -28,7 +26,7 @@ switch($action){
             return;
         }
         $si = $sizes[$size];
-        echo `python modifyCloud.py add $si 2>&1`;
+        echo `python modifyCloud.py add 1 2>&1`;
     break;
 
     case 'delete':

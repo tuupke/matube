@@ -25,4 +25,6 @@ $db->nquery("insert into video (status, name, storage, description, ownedBy, pub
 
 $email = $user->getMail();
 `python ./serverBackend/frontendNotifier.py $video $email`;
+
+
 ?>

@@ -103,11 +103,7 @@ function confirmDelete(id, name, el){
 }
 
 function newServer(){
-	var size = window.prompt("What is the size of the new worker? (small, medium, large)").toLowerCase();
-	while(size != "small" && size != 'medium' && size != 'large') {
-		var size = window.prompt("Invalid input. What is the size of the new worker? (small, medium, large)").toLowerCase();
-	}
-	if(!window.confirm("Are you sure you want to create a server of size: "+size+"?")){
+	if(!window.confirm("Are you sure you want to create a new server?")){
 		return;
 	}
 	var button = "<button type=\"button\" class=\"btn btn-danger\" onclick=\"confirmDelete('','',this.parentNode)\"><span class=\"glyphicon glyphicon-remove-sign\"></span></button>";
@@ -115,15 +111,15 @@ function newServer(){
 	row.setAttribute("class", "busy");
 	row.innerHTML = "<td>New server</td><td></td><td></td><td></td><td></td><td></td><td>" + button + "</td>";
 
-	send.sendData("action=new&size="+size,'/serverBackend/status.php', function(response){
+	send.sendData("action=new&size=1",'/serverBackend/status.php', function(response){
 		unsetBusy(row);
-		row.innerHTML = "<td>Ready bitchas</td><td></td><td></td><td></td><td></td><td></td><td>" + button + "</td>";
+		row.innerHTML = "<td>Server ready</td><td></td><td></td><td></td><td></td><td></td><td>" + button + "</td>";
 	}, 
 	function(){
 		window.alert("Something went wrong");
 	});
-	// console.log(document.getElementById('status').lastChild.lastChild);
-	document.getElementById('status').lastChild.lastChild.appendChild(row);
+
+	document.getElementById('statusTable').appendChild(row);
 	newLines[newLines.length] = row;
 
 }
@@ -141,7 +137,7 @@ function parseResponse(response){
 	console.log(response);
 	var json = JSON.parse(response);
 
-	var html = "<table><thead><tr><th>Name</th><th>IP</th><th>Memory (MB)</th><th># CPUs</th><th>Load</th><th>Job status</th><th>Actions</th></tr></thead><tbody>";
+	var html = "<table id='statusTable'><thead><tr><th>Name</th><th>IP</th><th>Memory (MB)</th><th># CPUs</th><th>Load</th><th>Job status</th><th>Actions</th></tr></thead><tbody>";
 	for(var i in json){
 		var ob = json[i];
 		var freeMem = ob.freeMemory;
@@ -175,8 +171,10 @@ function parseResponse(response){
 	html += "</tbody></table><br /><button type=\"button\" class=\"btn btn-success\" onclick=\"newServer()\">New server <span class=\"glyphicon glyphicon-plus-sign\"></span></button>";
 	var status = document.getElementById('status');
 	status.innerHTML = html;
-	for(var i = 0; i < newLines.length; i++)
-		status.lastChild.lastChild.appendChild(newLines[i]);
+	for(var i = 0; i < newLines.length; i++) {
+		if(newLines[i].innerHTML.indexOf("Server ready")==-1)
+			document.getElementById('statusTable').appendChild(newLines[i]);
+	}
 }
 
 </script>
