@@ -13,7 +13,7 @@ def main():
         print json.dumps(results)
 
 def get_servers():
-    filename = '/usr/share/nginx/matube/serverBackend/servers.txt'
+    filename = 'servers.txt'
     fp = open(filename, 'r')
     servers = json.load(fp)
     return servers
