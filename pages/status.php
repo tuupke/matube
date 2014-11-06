@@ -171,8 +171,10 @@ function parseResponse(response){
 	html += "</tbody></table><br /><button type=\"button\" class=\"btn btn-success\" onclick=\"newServer()\">New server <span class=\"glyphicon glyphicon-plus-sign\"></span></button>";
 	var status = document.getElementById('status');
 	status.innerHTML = html;
-	for(var i = 0; i < newLines.length; i++)
-		document.getElementById('statusTable').appendChild(newLines[i]);
+	for(var i = 0; i < newLines.length; i++) {
+		if(newLines[i].innerHTML.indexOf("Server ready")==-1)
+			document.getElementById('statusTable').appendChild(newLines[i]);
+	}
 }
 
 </script>
