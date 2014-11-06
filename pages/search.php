@@ -29,7 +29,7 @@ Pellentesque imperdiet condimentum nisl. Vestibulum vestibulum ipsum et leo port
 						<h3 class="panel-title"><?php echo $v['name']; ?></h3>
 					</div>
 					<div class="panel-body">
-						<img style='display: inline; float: left; margin-right: 15px;' src='http://178.62.252.40/videos/<?php echo replace('mp4','jpg',$v['storage']); ?>' width="196px" height="110px" /><span style='height: 110px; overflow: hidden;'><div style='max-height: 110px; overflow: hidden;'><?php echo nl2br(htmlspecialchars($v['description'])); ?></div></span>
+						<img style='display: inline; float: left; margin-right: 15px;' src='http://178.62.252.40/videos/<?php echo str_replace('mp4','jpg',$v['storage']); ?>' width="196px" height="110px" /><span style='height: 110px; overflow: hidden;'><div style='max-height: 110px; overflow: hidden;'><?php echo nl2br(htmlspecialchars($v['description'])); ?></div></span>
 					</div>
 					<div style="margin-left: 15px; margin-bottom: 15px;">
 						Uploaded by: <b><?php echo $v['username']; ?></b>
