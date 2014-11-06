@@ -50,6 +50,7 @@ def callback(ch, method, properties, body):
 
     retrieve_file(incomingJob['filename'])
 
+    task['queueTime'] = time.time
 
     channel.basic_publish(exchange='',
                           routing_key='processJobs',

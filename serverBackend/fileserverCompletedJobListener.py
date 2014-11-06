@@ -38,6 +38,9 @@ def callback(ch, method, properties, body):
 
     job = json.loads(body)
 
+    waitingTime = int(job['startTime']) - int(job['queueTime'])
+
+
     retrieve_file(job['workerserver'], job['filename'])
     retrieve_file(job['workerserver'], job['filename'].split(".")[0] + ".jpg")
     try:
