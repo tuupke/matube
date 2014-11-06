@@ -22,5 +22,8 @@ def getTenMinLoad():
 def getStatus():
     return subprocess.check_output("more /root/status.txt", shell=True)
 
+def getEta():
+    return subprocess.check_output("more /root/eta.txt", shell=True)
+
 def getRSAPubKey():
     return subprocess.check_output("more /root/.ssh/.id_rsa.pub", shell=True)

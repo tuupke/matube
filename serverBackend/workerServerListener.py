@@ -9,6 +9,7 @@ from utilsForStats import *
 import json
 import subprocess
 import sys
+import time
 from converter import Converter
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -35,13 +36,28 @@ def sendStatusMessage(status, progress):
     f.write(status + "," + str(progress))
     f.close()
 
+def update_eta(running_time, progress):
+    f = file('/root/eta.txt','w')
+    val = ((running_time / progress) * 100 ) - running_time
+    f.write(str(int(val)))
+    f.close()
+
+def reset_eta_status():
+    f = file('/root/eta.txt','w')
+    f.write(str(2**32))
+    f.close()
+    f = file('/root/status.txt','w')
+    f.write('idle')
+    f.close()
+
+
 def retrieve_file(remoteserver, filename):
     subprocess.check_output("wget -P " + filespath + " " + remoteserver + remotepath + filename,shell=True)
 
 def deleteProcessedVideos(file1, file2):
     subprocess.check_output("rm " + filespath + file1 + " " + filespath + file2, shell=True)
 
-def encodeFile(filename):
+def encodeFile(filename, startTime):
     encodedfilename = filename.split(".")[0] + ".mp4"
 
     c = Converter()
@@ -69,6 +85,8 @@ def encodeFile(filename):
         sys.stdout.write("\r%d%%" % timecode)
         sys.stdout.flush()
         sendStatusMessage('encoding', timecode)
+        runningTime = time.time() - startTime
+        update_eta(runningTime, timecode)
     print "\n Complete"
     return encodedfilename
 
@@ -87,7 +105,9 @@ def callback(ch, method, properties, body):
 
     retrieve_file(job['fileserver'], job['filename'])
 
-    encodedfile = encodeFile(job['filename'])
+
+    job['startTime'] = time.time()
+    encodedfile = encodeFile(job['filename'], job['startTime'])
 
     #deleteProcessedVideos(job['filename'], encodedfile)
 
@@ -104,7 +124,8 @@ def callback(ch, method, properties, body):
                           body=json.dumps(job))
 
     #publish work status
-    sendStatusMessage('idle', '')
+    reset_eta_status()
+
 
 
 
@@ -115,6 +136,5 @@ channel.basic_qos(prefetch_count=1)
 channel.basic_consume(callback,
                       queue='processJobs')
 
-sendStatusMessage('idle', '')
-
+reset_eta_status()
 channel.start_consuming()
