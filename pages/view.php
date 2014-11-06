@@ -41,17 +41,12 @@ h3 {
 </span>
 <?php
 
-	if($r['public']==0 && $user->getId() == $r['ownedBy']){
-		?><br /><br />
-              <label for="videoName">Invite user to view your video</label>
-                <input id="videoName" name="videoName" type="text" placeholder="Name" style='width: 320px;' class="form-control input-md"><br />
-		<?
-	}
-
-?>
-
-<?php
-
+			if($r['public']==0 && $user->getId() == $r['ownedBy']){
+				?><br /><br />
+		              <label for="videoName">Invite user to view your video</label>
+		                <input id="videoName" name="videoName" type="text" placeholder="Name" style='width: 320px;' class="form-control input-md"><br />
+				<?php
+			}
 
 		} else {
 ?>
