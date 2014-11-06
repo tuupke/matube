@@ -38,7 +38,8 @@ def sendStatusMessage(status, progress):
 
 def update_eta(running_time, progress):
     f = file('/root/eta.txt','w')
-    val = (((int(running_time) / int(progress)) * 100) - int(running_time))
+    print progress
+    val = (((int(running_time) * progress) * 100) - int(running_time))
     f.write(str(val))
     f.close()
 
