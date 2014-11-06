@@ -172,7 +172,7 @@ function parseResponse(response){
 	var status = document.getElementById('status');
 	status.innerHTML = html;
 	for(var i = 0; i < newLines.length; i++)
-		status.lastChild.lastChild.appendChild(newLines[i]);
+		document.getElementById('statusTable').appendChild(newLines[i]);
 }
 
 </script>
