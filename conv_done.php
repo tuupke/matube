@@ -29,4 +29,6 @@ if(count($res)==1) {
 	}
 }
 
+`rm videos/$old`;
+
 ?>
