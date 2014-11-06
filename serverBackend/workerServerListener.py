@@ -112,6 +112,7 @@ def callback(ch, method, properties, body):
     #deleteProcessedVideos(job['filename'], encodedfile)
 
     job['workerserver'] = getLocalIP()
+    job['worker_ip'] = getPublicIP()
     job['oldFilename'] = job['filename']
     job['filename'] = encodedfile
 
