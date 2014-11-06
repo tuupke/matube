@@ -91,7 +91,7 @@ function confirmDelete(id, name, el){
 	}
 	if(window.confirm("Do you really want to delete: "+name) && window.confirm("Are you sure?")){
 		busyIds[id] = true;
-		send.sendData("action=delete&id="+id,'/matube/serverBackend/status.php', function(response){
+		send.sendData("action=delete&id="+id,'/serverBackend/status.php', function(response){
 			el.parentNode.parentNode.removeChild(el.parentNode);
 			// window.alert(name + " deleted");
 		}, 
@@ -111,7 +111,7 @@ function newServer(){
 	row.setAttribute("class", "busy");
 	row.innerHTML = "<td>New server</td><td></td><td></td><td></td><td></td><td></td><td>" + button + "</td>";
 
-	send.sendData("action=new&size=1",'/matube/serverBackend/status.php', function(response){
+	send.sendData("action=new&size=1",'/serverBackend/status.php', function(response){
 		unsetBusy(row);
 		row.innerHTML = "<td>Server ready</td><td></td><td></td><td></td><td></td><td></td><td>" + button + "</td>";
 	}, 
@@ -127,9 +127,9 @@ function newServer(){
 var busyIds = [];
 var newLines = [];
 
-send.sendData('','/matube/serverBackend/status.php', parseResponse);
+send.sendData('','/serverBackend/status.php', parseResponse);
 window.setInterval(function(){
-	send.sendData('','/matube/serverBackend/status.php', parseResponse);
+	send.sendData('','/serverBackend/status.php', parseResponse);
 }, 5000);
 
 
