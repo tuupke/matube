@@ -9,7 +9,8 @@ if(!isset($_GET['search'])){
 $search = urldecode($_GET['search']);
 $search = implode("|", explode(" ", $search));
 
-$r = $db->query("select *,count(*) as cnt from tags where tag REGEXP ? and (public=1 or ownedBy=?) group by videoId", array($search, $user->getId()));
+$r = $db->query("select tags.*,video.*,user.username from tags, video, user where tags.tag REGEXP ? and (video.public=1 or video.ownedBy=?) and video.ownedBy=user.entityId group by video.id", array($search, $user->getId()),PDO::FETCH_BOTH);
+
 // print_r($r);
 function body(){
 	global $r, $db;
@@ -19,13 +20,7 @@ Pellentesque imperdiet condimentum nisl. Vestibulum vestibulum ipsum et leo port
 
 	if(count($r)){
 		foreach($r as $v){
-			$v = $db->query("select * from video, `user` where video.id=? and video.ownedBy=`user`.entityId",array($v[0]),PDO::FETCH_BOTH);
 
-			if(!count($v)){
-				continue;
-			}
-
-			$v = $v[0];
 			
 			?>
 			<a href='index.php?page=view&id=<?php echo $v[0]; ?>'>
