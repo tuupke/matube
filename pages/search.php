@@ -9,7 +9,7 @@ if(!isset($_GET['search'])){
 $search = urldecode($_GET['search']);
 $search = implode("|", explode(" ", $search));
 
-$r = $db->query("select tags.*,video.*,user.username from tags, video, user where tags.tag REGEXP ? and (video.public=1 or video.ownedBy=?) and video.ownedBy=user.entityId group by video.id", array($search, $user->getId()),PDO::FETCH_BOTH);
+$r = $db->query("select tags.*,video.*,user.username from tags, video, user where tags.tag REGEXP ? and (video.public=1 or video.ownedBy=?) and video.ownedBy=user.entityId and video.status>0 and video.id=tags.videoId group by video.id", array($search, $user->getId()),PDO::FETCH_BOTH);
 
 // print_r($r);
 function body(){
