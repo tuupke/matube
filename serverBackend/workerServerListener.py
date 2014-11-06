@@ -85,7 +85,7 @@ def encodeFile(filename, startTime):
         sys.stdout.write("\r%d%%" % timecode)
         sys.stdout.flush()
         sendStatusMessage('encoding', timecode)
-        runningTime = int(time.time) - int(startTime)
+        runningTime = int(time.time()) - int(startTime)
         update_eta(runningTime, timecode)
     print "\n Complete"
     return encodedfilename
@@ -106,7 +106,7 @@ def callback(ch, method, properties, body):
     retrieve_file(job['fileserver'], job['filename'])
 
 
-    job['startTime'] = time.time
+    job['startTime'] = time.time()
     encodedfile = encodeFile(job['filename'], job['startTime'])
 
     #deleteProcessedVideos(job['filename'], encodedfile)
