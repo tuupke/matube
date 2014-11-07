@@ -218,7 +218,7 @@ class User {
 	public function createUser($userInfo){
 		global $db;
 		$return = array("success"=>false);
-		$r = $db->query("select * from User where username=?",array($userInfo['username']));
+		$r = $db->query("select * from user where username=?",array($userInfo['username']));
 		// if(count($r)==0){ // Success
 			$doIt = true;
 			if(count($r)!=0){
