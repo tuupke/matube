@@ -47,7 +47,7 @@ def callback(ch, method, properties, body):
         MatubeEmail(job['email'], getPublicIP() + "/videos/" + job['filename'])
     except:
         pass
-    r = requests.get('http://178.62.239.233/conv_done.php?newName=' + job['filename'] + '&oldName=' + job['oldFilename'] + '&hash=41dc8c4ced0a3ec02593499f3f58fec306dc58903c054abaff5045ee9f189a96')
+    r = requests.get('http://178.62.239.233/conv_done.php?newName=' + job['filename'] + '&oldName=' + job['oldFilename'] + '&start=' + job['startTime'] + '&ip=' + job['worker_ip'] +'&hash=41dc8c4ced0a3ec02593499f3f58fec306dc58903c054abaff5045ee9f189a96')
 
 
 

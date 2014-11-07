@@ -38,13 +38,13 @@ def sendStatusMessage(status, progress):
 
 def update_eta(running_time, progress):
     f = file('/root/eta.txt','w')
-    val = ((running_time / progress) * 100 ) - running_time
+    val = ((running_time / progress) * 100) - running_time
     f.write(str(int(val)))
     f.close()
 
 def reset_eta_status():
     f = file('/root/eta.txt','w')
-    f.write(str(2**32))
+    f.write(str(-1))
     f.close()
     f = file('/root/status.txt','w')
     f.write('idle')
@@ -112,6 +112,7 @@ def callback(ch, method, properties, body):
     #deleteProcessedVideos(job['filename'], encodedfile)
 
     job['workerserver'] = getLocalIP()
+    job['worker_ip'] = getPublicIP()
     job['oldFilename'] = job['filename']
     job['filename'] = encodedfile
 
