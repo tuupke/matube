@@ -219,8 +219,13 @@ class User {
 		global $db;
 		$return = array("success"=>false);
 		$r = $db->query("select * from User where username=?",array($userInfo['username']));
-		if(count($r)==0){ // Success
+		// if(count($r)==0){ // Success
 			$doIt = true;
+			if(count($r)!=0){
+				$return['username'] = "Username already taken";
+				$doIt = false;
+			}
+
 			// Check parameters
 			if(strlen($userInfo['username'])>56){
 				$return['username'] = "Username too long.";
@@ -271,7 +276,7 @@ class User {
 
 				$return['success']=true;
 			}
-		} 
+		// }
 		return $return;
 	}
 
