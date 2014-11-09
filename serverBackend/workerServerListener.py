@@ -54,7 +54,7 @@ def reset_eta_status():
 
 
 def retrieve_file(remoteserver, filename):
-    subprocess.check_output("wget http://matube.gehack.nl/deregister.php?hash=b5b9099bd50b60fbde913cc66aad113b9784543db75f146be423fb0d1b3047c418595a7365904c9b183b33d671c7977725b5981c828629cd9172f9441dbd4c1d")
+    subprocess.check_output("wget http://matube.gehack.nl/deregister.php?hash=b5b9099bd50b60fbde913cc66aad113b9784543db75f146be423fb0d1b3047c418595a7365904c9b183b33d671c7977725b5981c828629cd9172f9441dbd4c1d",shell=True)
     subprocess.check_output("wget -P " + filespath + " " + remoteserver + remotepath + filename,shell=True)
 
 def deleteProcessedVideos(file1, file2):
